@@ -1,0 +1,24 @@
+{
+  "name": "education-and-media",
+  "version": "1.0.0",
+  "description": "Minor CMD 3.4 Education and Media",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev:back": "nodemon server/index.js",
+    "dev:front": "cd client && npm run serve",
+    "build:front": "cd client && npm run build"
+  },
+  "author": "Juul Crooymans",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}

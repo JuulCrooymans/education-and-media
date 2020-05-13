@@ -8,6 +8,7 @@
     "dev:back": "nodemon server/index.js",
     "dev:front": "cd client && npm run serve",
     "build:front": "cd client && npm run build",
+    "heroku-prebuild": "cd client && npm install",
     "heroku-postbuild": "npm run build:front"
   },
   "author": "Juul Crooymans",

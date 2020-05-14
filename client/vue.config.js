@@ -8,5 +8,12 @@ module.exports = {
                 target: 'http://localhost:3000'
             }
         }
+    },
+    css: {
+        loaderOptions: {
+            scss: {
+                prependData: `@import "@/assets/scss/main.scss";`
+            }
+        }
     }
 }

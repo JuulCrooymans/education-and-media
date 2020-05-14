@@ -1,5 +1,8 @@
 # CMD 3.4 | Education and Media
 
+Application available at: http://education-and-media.herokuapp.com/
+
+## Build
 ``` bash
 # install dependencies
 $ npm install

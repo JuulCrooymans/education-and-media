@@ -1,0 +1,98 @@
+// ---- grid ----
+.container {
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    @include breakpoint('xs'){
+        max-width: $container-xs-min;   
+    }
+
+    @include breakpoint('sm'){
+        max-width: $container-sm-min;   
+    }
+
+    @include breakpoint('md'){
+        max-width: $container-md-min;   
+    }
+
+    @include breakpoint('lg'){
+        max-width: $container-lg-min;   
+    }
+}
+
+.container-fluid {
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.row {
+    display: flex;
+    margin: 0 $col-padding-x * -1;
+    flex-wrap: wrap;
+    padding: $row-padding-y 0;
+}
+
+[class*="col-"] {
+    padding: $col-padding-y $col-padding-x;
+}
+
+.col {
+    flex-grow: 1;
+    max-width: 100%;
+    flex-basis: 0;
+    padding: $col-padding-y $col-padding-x;
+
+    @include col-width();    
+}
+
+.col-xs {
+    @include breakpoint('xs') {
+        @include col-width(); 
+    }
+}
+
+.col-sm {
+    @include breakpoint('sm') {
+        @include col-width(); 
+    }
+}
+
+.col-md {
+    @include breakpoint('md') {
+        @include col-width(); 
+    }
+}
+
+.col-lg {
+    @include breakpoint('lg') {
+        @include col-width(); 
+    }
+}
+
+.offset {
+    @include offset-width();
+}
+
+.offset-xs {
+    @include breakpoint('xs') {
+        @include offset-width();
+    }
+}
+
+.offset-sm {
+    @include breakpoint('sm') {
+        @include offset-width();
+    }
+}
+
+.offset-md {
+    @include breakpoint('md') {
+        @include offset-width();
+    }
+}
+
+.offset-lg {
+    @include breakpoint('lg') {
+        @include offset-width(); 
+    }
+}

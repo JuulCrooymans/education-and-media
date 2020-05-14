@@ -1,0 +1,49 @@
+// ---- hidden at breakpoint ----
+.hidden-xs {
+    @include breakpoint-down('xs') {
+        display: none;
+    }
+}
+
+.hidden-sm {
+    @include breakpoint-down('sm') {
+        display: none;
+    }
+}
+
+.hidden-md {
+    @include breakpoint-down('md') {
+        display: none;
+    }
+}
+
+.hidden-lg {
+    @include breakpoint-down('lg') {
+        display: none;
+    }
+}
+
+// ---- show at breakpoint ----
+.hidden-up-xs {
+    @include breakpoint('xs') {
+        display: none;
+    }
+}
+
+.hidden-up-sm {
+    @include breakpoint('sm') {
+        display: none;
+    }
+}
+
+.hidden-up-md {
+    @include breakpoint('md') {
+        display: none;
+    }
+}
+
+.hidden-up-lg {
+    @include breakpoint('lg') {
+        display: none;
+    }
+}

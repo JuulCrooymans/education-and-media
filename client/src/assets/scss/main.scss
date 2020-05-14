@@ -1,0 +1,9 @@
+// ---- main build file ----
+
+@import '_core/_normalize'; // normalize
+@import '_core/_settings';
+@import '_core/_mixins';
+@import '_core/_components';
+@import '_layout/_layout.scss';
+
+$black: #000;

@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <PostComponent msg="Welcome to Your Vue.js App"/>
+  <div class="home container">
+    <PostComponent />
   </div>
 </template>
 
@@ -15,3 +15,6 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

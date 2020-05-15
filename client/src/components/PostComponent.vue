@@ -18,13 +18,14 @@
       >
         {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}
         <p>{{ post.text }}</p>
+        <br>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import PostService from '../PostService';
+import PostService from '@/api/PostService';
 
 export default {
   name: 'PostComponent',

@@ -40,21 +40,19 @@ export default {
     async createPost() {
       const accessToken = await this.$auth.getTokenSilently();
       await PostService.insertPost(this.text, accessToken);
-      this.posts = await PostService.getPosts();
+      this.posts = await PostService.getPosts(accessToken);
     },
     async deletePost(id) {
+      const accessToken = await this.$auth.getTokenSilently();
       await PostService.deletePost(id);
-      this.posts = await PostService.getPosts();
+      this.posts = await PostService.getPosts(accessToken);
     }
   },
   async created() {
     try {
-
       const accessToken = await this.$auth.getTokenSilently();
       this.posts = await PostService.getPosts(accessToken);
     } catch(err) {
-      console.log(err);
-      
       this.error = err.message;
     }
   }

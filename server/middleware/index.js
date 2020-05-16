@@ -1,14 +1,5 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors'); 
 const jwt = require("express-jwt"); 
 const jwksRsa = require("jwks-rsa");
-
-const app = express();
-
-//middleware
-app.use(bodyParser.json());
-app.use(cors());
 
 const authConfig = {
     domain: process.env.AUTH0_DOMAIN,
@@ -31,24 +22,4 @@ const checkJwt = jwt({
     algorithm: ["RS256"]
 });
 
-const posts = require('./routes/api/posts');
-
-app.use('/api/posts', posts);
-
-
-// handle production
-if (process.env.NODE_ENV === 'production') {
-    // static folder
-    app.use(express.static(__dirname + '/public/'));
-
-    // handle SPA 
-    app.get(/.*/, (req, res) => { // send all routes to index.html
-        res.sendFile(__dirname + '/public/index.html');
-    });
-}
-
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-    console.log(`listening on ${port}`);
-});
+module.exports = checkJwt

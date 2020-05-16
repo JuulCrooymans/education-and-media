@@ -1,6 +1,6 @@
 # CMD 3.4 | Education and Media
 
-Application available at: http://education-and-media.herokuapp.com/
+Application available at: https://education-and-media.herokuapp.com/
 
 ## Build
 ``` bash

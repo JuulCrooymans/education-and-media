@@ -6,6 +6,3 @@ node_modules
 
 # static folder
 server/public
-
-# auth0 config
-client/auth_config.json

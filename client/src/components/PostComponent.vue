@@ -18,13 +18,14 @@
       >
         {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}
         <p>{{ post.text }}</p>
+        <br>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import PostService from '../PostService';
+import PostService from '@/api/PostService';
 
 export default {
   name: 'PostComponent',
@@ -37,7 +38,8 @@ export default {
   },
   methods: {
     async createPost() {
-      await PostService.insertPost(this.text);
+      const accessToken = await this.$auth.getTokenSilently();
+      await PostService.insertPost(this.text, accessToken);
       this.posts = await PostService.getPosts();
     },
     async deletePost(id) {
@@ -47,8 +49,12 @@ export default {
   },
   async created() {
     try {
-      this.posts = await PostService.getPosts();
+
+      const accessToken = await this.$auth.getTokenSilently();
+      this.posts = await PostService.getPosts(accessToken);
     } catch(err) {
+      console.log(err);
+      
       this.error = err.message;
     }
   }

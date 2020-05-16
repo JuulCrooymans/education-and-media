@@ -2,9 +2,14 @@ const url = 'api/posts/';
 
 class PostService {
     // get post
-    static async getPosts() {
+    static async getPosts(accessToken) {
         try {
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                method: 'get',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
             const data = await res.json();
                 
             return data.map( post => ({
@@ -17,21 +22,23 @@ class PostService {
     }
 
     // Create Post
-    static insertPost(text) {
+    static insertPost(text, accessToken) {
         return fetch(url, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`
             },
             body: JSON.stringify({text})
         })
     }
 
     // Delete post
-    static deletePost(id) {
+    static deletePost(id, accessToken) {
         return fetch(`${url}${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            Authorization: `Bearer ${accessToken}`
         });
     }
 }

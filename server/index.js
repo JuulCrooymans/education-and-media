@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); 
-const jwt = require("express-jwt"); 
-const jwksRsa = require("jwks-rsa");
 
 const app = express();
 
@@ -10,30 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const authConfig = {
-    domain: 'dev-a9jcsg3o.eu.auth0.com',
-    audience: 'education-and-media-api.com'
-};
-
-// Create middleware to validate the JWT using express-jwt
-const checkJwt = jwt({
-    // Provide a signing key based on the key identifier in the header and the signing keys provided by your Auth0 JWKS endpoint.
-    secret: jwksRsa.expressJwtSecret({
-      cache: true,
-      rateLimit: true,
-      jwksRequestsPerMinute: 5,
-      jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
-    }),
-  
-    // Validate the audience (Identifier) and the issuer (Domain).
-    audience: authConfig.audience,
-    issuer: `https://${authConfig.domain}/`,
-    algorithm: ["RS256"]
-});
+const checkJwt = require('./middleware/')
 
 const posts = require('./routes/api/posts');
 
-app.use('/api/posts', posts);
+app.use('/api/posts', checkJwt, posts);
 
 
 // handle production

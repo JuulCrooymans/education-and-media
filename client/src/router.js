@@ -23,6 +23,11 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
       beforeEnter: authGuard
+    },
+    {
+      path: '*',
+      component: () => import('./components/404.vue'),
+      beforeEnter: authGuard
     }
   ]
 })

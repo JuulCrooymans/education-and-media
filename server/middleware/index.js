@@ -2,8 +2,8 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 
 const authConfig = {
-    domain: process.env.AUTH0_DOMAIN,
-    audience: process.env.AUTH0_AUDIENCE
+    domain: 'dev-a9jcsg3o.eu.auth0.com',
+    audience: 'https://education-and-media-api.com'
 };
 
 // Create middleware to validate the JWT using express-jwt

@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <Navigation />
-    <router-view/>
+    <TopBar />
+    <transition mode="out-in" name="page">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
 <script>
-import Navigation from '@/components/partials/Navigation'
+import TopBar from '@/components/partials/TopBar'
 
 export default {
   components: {
-    Navigation
+    TopBar
   }
 }
 </script>

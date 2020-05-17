@@ -44,7 +44,7 @@ export default {
     },
     async deletePost(id) {
       const accessToken = await this.$auth.getTokenSilently();
-      await PostService.deletePost(id);
+      await PostService.deletePost(id, accessToken);
       this.posts = await PostService.getPosts(accessToken);
     }
   },

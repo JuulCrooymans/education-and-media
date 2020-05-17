@@ -23,6 +23,8 @@ class PostService {
 
     // Create Post
     static insertPost(text, accessToken) {
+        console.log(accessToken);
+
         return fetch(url, {
             method: 'post',
             headers: {
@@ -36,9 +38,12 @@ class PostService {
 
     // Delete post
     static deletePost(id, accessToken) {
+        
         return fetch(`${url}${id}`, {
             method: 'DELETE',
-            Authorization: `Bearer ${accessToken}`
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
         });
     }
 }

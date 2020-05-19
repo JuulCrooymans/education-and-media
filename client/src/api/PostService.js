@@ -23,8 +23,6 @@ class PostService {
 
     // Create Post
     static insertPost(text, accessToken) {
-        console.log(accessToken);
-
         return fetch(url, {
             method: 'post',
             headers: {

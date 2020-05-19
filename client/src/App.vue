@@ -11,6 +11,11 @@
 import TopBar from '@/components/partials/TopBar'
 
 export default {
+  data() {
+    return {
+      user: ''
+    }
+  },
   components: {
     TopBar
   }

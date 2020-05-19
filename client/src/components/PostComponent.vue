@@ -50,6 +50,8 @@ export default {
   },
   async created() {
     try {
+      console.log(this.$auth.lock);
+      
       const accessToken = await this.$auth.getTokenSilently();
       this.posts = await PostService.getPosts(accessToken);
     } catch(err) {

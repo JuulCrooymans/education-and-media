@@ -21,7 +21,7 @@ export default {
     PostComponent
   },
   mounted() {
-    // console.log(this.$auth);
+    console.log(this.$auth.user);
     
   }
 }

@@ -1,38 +1,34 @@
 const axios = require('axios');
-require('dotenv').config;
+const AuthenticationClient = require('auth0').AuthenticationClient;
+require('dotenv').config();
 
-// const options = {
-//     method: 'POST',
-//     url: 'https://dev-a9jcsg3o.eu.auth0.com/oauth/token',
-//     headers: {
-//         'content-type': 'application/json'
-//     },
-//     body: {
-//         grant_type: "client_credentials",
-//         client_id: "yEOf10aLtaO1UlnDdQ2DKSS2UInod3kC",
-//         client_secret: process.env.AUTH_CLIENT_SECRET,
-//         audience: "https://dev-a9jcsg3o.eu.auth0.com/api/v2/"
-//     }
-// };
+const auth0 = new AuthenticationClient({
+    domain: 'dev-a9jcsg3o.eu.auth0.com',
+    clientId: 'yIpFqDKjseR34WK2v2AVaELs5PkFDGgQ',
+    clientSecret: process.env.AUTH0_CLIENT_SECRET
+});
 
-// const options = {
-//     method: 'POST',
-//     url: 'https://dev-a9jcsg3o.eu.auth0.com/oauth/token',
-//     headers: {'content-type': 'application/json'},
-//     form: {
-//       grant_type: 'client_credentials',
-//       client_id: 'yEOf10aLtaO1UlnDdQ2DKSS2UInod3kC',
-//       client_secret: process.env.AUTH_CLIENT_SECRET,
-//       audience: 'https://dev-a9jcsg3o.eu.auth0.com/api/v2/'
-//     }
-//   };
+const tokenOptions = {
+    audience: 'https://dev-a9jcsg3o.eu.auth0.com/api/v2/',
+    scope: 'read:users read:user_idp_tokens'
+}
 
-// exports.getUser = async (req, res) => {
-//     try {
-//         const data = await axios(options);
-//         res.send(await data.body);
-//     } catch (err) {
-//         res.send(err.message)
-//         throw err
-//     }
-// }
+exports.getUserAppMetadata = async (req, res) => {
+    try {
+        // auth0.clientCredentialsGrant(tokenOptions, async (err, response) => {
+        //     if (err) throw err
+
+            const data = await axios({
+                method: 'GET',
+                url: `https://dev-a9jcsg3o.eu.auth0.com/userinfo`,
+                headers: { authorization: req.headers.authorization }
+            });
+
+            res.send(await data.data)
+        // });
+        
+    } catch (err) {
+        res.send(err.message)
+        throw err
+    }
+}

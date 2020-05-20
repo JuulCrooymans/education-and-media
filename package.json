@@ -13,6 +13,7 @@
   "author": "Juul Crooymans",
   "license": "ISC",
   "dependencies": {
+    "auth0": "^2.25.1",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

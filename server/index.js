@@ -10,6 +10,10 @@ app.use(cors());
 
 const checkJwt = require('./api/middleware/auth')
 
+const user = require('./api/routes/user');
+
+app.use('/api/user', checkJwt, user);
+
 const posts = require('./api/routes/posts');
 
 app.use('/api/posts',checkJwt, posts);

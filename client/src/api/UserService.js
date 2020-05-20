@@ -1,11 +1,17 @@
 const url = 'api/user'
 
-
-
 class UserService {
-    static async getUserData(accessToken) {
+    static async getUserData(user, accessToken) {
         try {
-            const res = await fetch(url);
+            console.log(user);
+            
+            const res = await fetch(url, {
+                method: 'get',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    user: user
+                }
+            });
             const data = await res.json();
 
             return data

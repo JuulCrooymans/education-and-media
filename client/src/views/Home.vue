@@ -7,7 +7,7 @@
 <script>
 // @ is an alias to /src
 import PostComponent from '@/components/PostComponent.vue'
-// import UserService from '@/api/UserService'
+import UserService from '@/api/UserService'
 
 
 export default {
@@ -20,9 +20,16 @@ export default {
   components: {
     PostComponent
   },
-  mounted() {
-    console.log(this.$auth.user);
-    
+  async created() {
+    try {
+      const accessToken = await this.$auth.getTokenSilently();
+      this.user = await UserService.getUserData(this.$auth.user.sub, accessToken);
+      await this.$store.commit('setUserData', this.user);
+      console.log(this.$store.state.userData.app_metadata.roles.includes('admin'));
+
+    } catch(err) {
+      this.error = err.message;
+    }
   }
 }
 </script>

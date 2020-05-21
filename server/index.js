@@ -16,7 +16,7 @@ app.use('/api/user', checkJwt, user);
 
 const posts = require('./api/routes/posts');
 
-app.use('/api/posts',checkJwt, posts);
+app.use('/api/posts', checkJwt, posts);
 
 
 // handle production

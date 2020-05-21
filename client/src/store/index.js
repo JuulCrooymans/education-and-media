@@ -5,6 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    message: 'Hello World!'
+    message: 'Hello World!',
+    userRoles: null
+  },
+  mutations: {
+    setUserData(state, user) {
+      state.userRoles = user
+    }
   }
 });

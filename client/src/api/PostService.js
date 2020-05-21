@@ -22,7 +22,7 @@ class PostService {
     }
 
     // Create Post
-    static insertPost(text, accessToken) {
+    static insertPost(text, user, accessToken) {
         return fetch(url, {
             method: 'post',
             headers: {
@@ -30,7 +30,7 @@ class PostService {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`
             },
-            body: JSON.stringify({text})
+            body: JSON.stringify({text, user})
         })
     }
 

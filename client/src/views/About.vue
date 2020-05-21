@@ -8,8 +8,13 @@
     
     <div class="row">
       <div class="col-12">
+        <h4>User roles</h4>
         <div v-if="error" class="error">{{ error }}</div>
-        <div v-if="!error">{{ user }}</div>
+        <ul v-if="!error">
+          <li v-for="el in user" :key="el">
+            {{ el }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -30,6 +35,7 @@ export default {
     try {
       const accessToken = await this.$auth.getTokenSilently();
       this.user = await UserService.getUserData(this.$auth.user.sub, accessToken);
+      await this.$store.commit('setUserData', this.user)
     } catch(err) {
       this.error = err.message;
     }

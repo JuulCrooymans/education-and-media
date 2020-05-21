@@ -3,8 +3,6 @@ const url = 'api/user'
 class UserService {
     static async getUserData(user, accessToken) {
         try {
-            console.log(user);
-            
             const res = await fetch(url, {
                 method: 'get',
                 headers: {

@@ -1,17 +1,17 @@
-const url = 'api/user'
+const url = '/api/user/'
 
 class UserService {
-    static async getUserData(user, accessToken) {
+    static async getUserData(id, accessToken) {
         try {
-            const res = await fetch(url, {
-                method: 'get',
+            const res = await fetch(`${url}${id}`, {
+                method: 'GET',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
-                    user: user
                 }
             });
-            const data = await res.json();
-
+            const data = await res;
+            
+            
             return data
             
         } catch (err) {

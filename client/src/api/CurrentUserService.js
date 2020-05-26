@@ -1,16 +1,17 @@
-const url = '/api/user/'
+const url = '/api/currentUser'
 
-class UserService {
-    static async getUserData(id, accessToken) {
+class CurrentUserService {
+    static async getUserData(user, accessToken) {
         try {
-            const res = await fetch(`${url}${id}`, {
-                method: 'GET',
+            const res = await fetch(url, {
+                method: 'get',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
+                    user: user
                 }
             });
             const data = await res.json();
-            
+
             return data
             
         } catch (err) {
@@ -19,4 +20,4 @@ class UserService {
     }
 }
 
-export default UserService
+export default CurrentUserService

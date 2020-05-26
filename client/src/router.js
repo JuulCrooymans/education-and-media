@@ -25,6 +25,11 @@ export default new Router({
       beforeEnter: authGuard
     },
     {
+      path: '/user/:id',
+      component: () => import('./views/User.vue'),
+      beforeEnter: authGuard
+    },
+    {
       path: '*',
       component: () => import('./components/404.vue'),
       beforeEnter: authGuard

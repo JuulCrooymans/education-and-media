@@ -2,7 +2,7 @@
   <div class="about container">
     <div class="row">
       <div class="col-12">
-        <h1>This is an about page</h1>
+        <h1>About</h1>
       </div>
     </div>
     
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import UserService from '@/api/UserService'
+import CurrentUserService from '@/api/CurrentUserService'
 
 export default {
   name: 'about',
@@ -34,7 +34,7 @@ export default {
   async created() {
     try {
       const accessToken = await this.$auth.getTokenSilently();
-      this.user = await UserService.getUserData(this.$auth.user.sub, accessToken);
+      this.user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
       await this.$store.commit('setUserData', this.user)
     } catch(err) {
       this.error = err.message;

@@ -13,18 +13,18 @@ const tokenOptions = {
     scope: 'read:users read:user_idp_tokens'
 }
 
-exports.getUser = async (req, res) => {
+exports.getUserAppMetadata = async (req, res) => {
     try {
         auth0.clientCredentialsGrant(tokenOptions, async (err, response) => {
             if (err) throw err
             
             const data = await axios({
                 method: 'GET',
-                url: `https://dev-a9jcsg3o.eu.auth0.com/api/v2/users/auth0|${req.params.id}`,
+                url: `https://dev-a9jcsg3o.eu.auth0.com/api/v2/users/${req.headers.user}`,
                 headers: { authorization: `bearer ${response.access_token}` }
             });
             
-            res.send(await data.data);
+            res.send(await data.data.app_metadata.roles)
         });
         
     } catch (err) {

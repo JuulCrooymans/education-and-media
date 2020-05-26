@@ -17,7 +17,7 @@ const posts = require('./api/routes/posts');
 app.use('/api/posts', checkJwt, posts);
 
 const user = require('./api/routes/user');
-app.use('/api/user/:id', user);
+app.use('/', user);
 
 
 

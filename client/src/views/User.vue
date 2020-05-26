@@ -1,12 +1,13 @@
 <template>
     <div class="container">
-        <h1>User</h1>
-        <p>{{user}}</p>
+        <Profile v-if="user" :userData="user" />
     </div>
 </template>
 
 <script>
     import UserService from '@/api/UserService'
+    import Profile from '@/components/partials/user/Profile'
+
     export default {
         name: 'user',
         data() {
@@ -14,12 +15,13 @@
                 user: null
             }
         },
+        components: {
+            Profile
+        },
         async created() {
             try {
                 const accessToken = await this.$auth.getTokenSilently();
                 this.user = await UserService.getUserData(this.$route.params.id, accessToken);
-                console.log(await UserService.getUserData(this.$route.params.id, accessToken));
-                
             } catch(err) {
                 this.error = err.message;
             }

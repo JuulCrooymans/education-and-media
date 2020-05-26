@@ -8,11 +8,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const checkJwt = require('./middleware/')
+const checkJwt = require('./api/middleware/auth')
 
-const posts = require('./routes/api/posts');
+const currentUser = require('./api/routes/currentUser');
+app.use('/api/currentUser', checkJwt, currentUser);
 
+const posts = require('./api/routes/posts');
 app.use('/api/posts', checkJwt, posts);
+
+const user = require('./api/routes/user');
+app.use('/', user);
+
 
 
 // handle production

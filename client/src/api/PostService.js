@@ -1,4 +1,4 @@
-const url = 'api/posts/';
+const url = '/api/posts/';
 
 class PostService {
     // get post
@@ -22,9 +22,7 @@ class PostService {
     }
 
     // Create Post
-    static insertPost(text, accessToken) {
-        console.log(accessToken);
-
+    static insertPost(text, user, accessToken) {
         return fetch(url, {
             method: 'post',
             headers: {
@@ -32,7 +30,20 @@ class PostService {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`
             },
-            body: JSON.stringify({text})
+            body: JSON.stringify({text, user})
+        })
+    }
+
+    // update Post
+    static updatePost(id, text, accessToken) {
+        return fetch(`${url}${id}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({id, text})
         })
     }
 

@@ -129,7 +129,6 @@ export default {
 
     #{ $self }__body {
       margin-bottom: 10px;
-      opacity: 87%;
     }
 
     #{ $self }__delete {

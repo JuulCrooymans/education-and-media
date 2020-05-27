@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-        <Profile v-if="user" :userData="user" />
+        <transition name="fade-fast" mode="out-in">
+            <Profile v-if="user" :userData="user" :key="$route.params.id" />
+        </transition>
     </div>
 </template>
 
@@ -18,12 +20,22 @@
         components: {
             Profile
         },
-        async created() {
-            try {
-                const accessToken = await this.$auth.getTokenSilently();
-                this.user = await UserService.getUserData(this.$route.params.id, accessToken);
-            } catch(err) {
-                this.error = err.message;
+        watch: {
+            '$route.params.id': function (id) {
+                this.getUserData();
+            }
+        },
+        created() {
+            this.getUserData();
+        },
+        methods: {
+            async getUserData() {
+                try {
+                    const accessToken = await this.$auth.getTokenSilently();
+                    this.user = await UserService.getUserData(this.$route.params.id, accessToken);
+                } catch(err) {
+                    this.error = err.message;
+                }
             }
         }
     }

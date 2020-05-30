@@ -1,14 +1,13 @@
 <template>
-  <div class="about container">
+  <div class="page">
     <div class="row">
       <div class="col-12">
-        <h1>About</h1>
+        <h1 class="h3">About</h1>
       </div>
     </div>
     
     <div class="row">
       <div class="col-12">
-        <h4>User roles</h4>
         <div v-if="error" class="error">{{ error }}</div>
         <ul v-if="!error">
           <li v-for="el in user" :key="el">

@@ -16,17 +16,17 @@ export default new Router({
       beforeEnter: authGuard
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/studenten',
+      name: 'studenten',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/Studenten.vue'),
       beforeEnter: authGuard
     },
     {
-      path: '/user/:id',
-      component: () => import('./views/User.vue'),
+      path: '/studenten/:id',
+      component: () => import('./views/Student.vue'),
       beforeEnter: authGuard
     },
     {

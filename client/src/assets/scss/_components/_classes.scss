@@ -47,3 +47,20 @@
         display: none;
     }
 }
+
+// ---- border ---- 
+.border-top {
+    border-top: 2px solid $light;
+}
+
+.border-right {
+    border-right: 2px solid $light;
+}
+
+.border-bottom {
+    border-bottom: 2px solid $light;
+}
+
+.border-left {
+    border-left: 2px solid $light;
+}

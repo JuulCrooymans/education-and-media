@@ -1,12 +1,11 @@
 <template>
-    <div class="nav">
-        <div class="nav__cont container">
-            <div class="nav__pages col-6">
-                <router-link class="nav__button" to="/">Home</router-link>
-                <router-link class="nav__button" to="/about">About</router-link>
+    <div class="nav border-bottom">
+        <div class="nav__cont">
+            <div class="col-2 nav__logo">
+                <h4>CMD</h4>
             </div>
-            <div class="nav__user col-6" v-if="!$auth.loading === true">
-                <router-link :to="`/user/${$auth.user.sub.replace('auth0|', '')}`" class="nav__profile">
+            <div class="nav__user col-10" v-if="!$auth.loading === true">
+                <router-link :to="`/studenten/${$auth.user.sub.replace('auth0|', '')}`" class="nav__profile">
                     <img class="nav__image" :src="$auth.user.picture" alt="profile picture">
                     <p class="nav__username">{{ $auth.user.nickname }}</p>
                 </router-link>
@@ -37,24 +36,28 @@
 
 <style lang="scss" scoped>
     .nav {
-        background: #f2f2f2;
+        background: #fff;
         margin-bottom: 30px;
         $self: &;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
 
         &__cont {
             display: flex;
             height: 80px;
             align-items: center;
+            padding: 0 15px;
 
-            #{ $self }__pages {
-                #{$self}__button {
-                    color: black;
-                    margin-right: 50px;
-                    text-decoration: none;
-                    
-                    &.router-link-exact-active {
-                        font-weight: bold;
-                    }
+            #{ $self }__logo {
+                display: flex;
+                align-items: center;
+                height: 100%;
+
+                h4 {
+                    margin: 0;
                 }
             }
 
@@ -72,8 +75,8 @@
                     #{ $self }__username {
                         font-weight: bold;
                         margin-left: 10px;
-                        color: black;
                         text-decoration: none;
+                        color: $dark;
                     }
 
                     #{ $self }__image {
@@ -88,7 +91,7 @@
                         height: 30px;
 
                         .cls-1{
-                            fill:#242424;
+                            fill:$dark;
                         }
                     }
                 }

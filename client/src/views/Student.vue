@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="page">
         <transition name="fade-fast" mode="out-in">
             <Profile v-if="user" :userData="user" :key="$route.params.id" />
         </transition>

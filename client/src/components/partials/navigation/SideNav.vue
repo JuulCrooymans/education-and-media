@@ -29,7 +29,7 @@
     position: fixed;
 
     &__wrapper {
-        padding: $lg-space 0 0;
+        padding: $space-lg 0 0;
         display: flex;
         flex-direction: column;
 
@@ -37,14 +37,14 @@
         #{$self}__button {
             color: $dark;
             text-decoration: none;
-            padding: $xs-space 0 $xs-space $md-space;
-            margin-bottom: $md-space;
+            padding: $space-xs 0 $space-xs $space-md;
+            margin-bottom: $space-md;
             display: flex;
             align-items: center;
             opacity: .87;
 
             #{ $self }__icon {
-                margin-right: $sm-space;
+                margin-right: $space-sm;
 
                 svg {
                     width: 30px;
@@ -55,7 +55,7 @@
             &.router-link-exact-active {
                 font-weight: bold;
                 border-left: 3px $blue solid;
-                padding-left: $md-space - 3;
+                padding-left: $space-md - 3;
                 opacity: 1;
 
                 #{ $self }__icon {

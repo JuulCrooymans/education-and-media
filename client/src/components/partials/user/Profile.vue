@@ -32,7 +32,7 @@
 
     &__wrapper {
         display: flex;
-        padding-bottom: $md-space;
+        padding-bottom: $space-md;
     }
     
     &__picture {

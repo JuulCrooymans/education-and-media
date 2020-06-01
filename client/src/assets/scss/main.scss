@@ -1,6 +1,7 @@
 // ---- main build file ----
 
 @import '_core/_normalize'; // normalize
+@import '_components/_variables';
 @import '_core/_settings';
 @import '_core/_mixins';
 @import '_core/_components';

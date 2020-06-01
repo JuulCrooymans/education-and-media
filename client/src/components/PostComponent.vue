@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <h1>Latest Posts</h1>
+        <h1 class="h3">Dashboard</h1>
       </div>
     </div>
     <div class="row">
@@ -28,7 +28,7 @@
         <img class="post__picture" :src="post.user.picture" alt="profile picture">
         <div class="post__body">
           <div class="post__user">
-            <router-link class="post__name" :to="`/user/${post.user.sub.replace('auth0|', '')}`">{{ post.user.name }}</router-link>
+            <router-link class="post__name" :to="`/studenten/${post.user.sub.replace('auth0|', '')}`">{{ post.user.name }}</router-link>
             <p class="post__date">{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</p>
 
           </div>
@@ -129,6 +129,7 @@ export default {
 
     #{ $self }__body {
       margin-bottom: 10px;
+      opacity: .87;
     }
 
     #{ $self }__delete {

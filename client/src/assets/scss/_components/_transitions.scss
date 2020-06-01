@@ -6,3 +6,11 @@
     opacity: 0;
     transform: translateY(1em);
 }
+
+.fade-fast-enter-active, .fade-fast-leave-active {
+    transition: all .2s ease;
+}
+
+.fade-fast-enter, .fade-fast-leave-to {
+    opacity: 0;
+}

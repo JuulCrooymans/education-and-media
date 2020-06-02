@@ -3,6 +3,6 @@ const newUserController = require('../controllers/newUser.controller');
 const router = express.Router();
 
 // Get user
-router.post('/api/newUser', newUserController.setNewUser);
+router.post('/', newUserController.setNewUser);
 
 module.exports = router;

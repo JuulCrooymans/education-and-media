@@ -4,10 +4,10 @@ require('dotenv').config();
 exports.setNewUser = async (req, res) => {
     const users = await loadUsersCollection();
     await users.insertOne({
-        userId: `auth0|${req.body.userId}`
+        userId: req.body.userId
     });
 
-    res.status(201).send();
+    res.status(201).send(req.body.userId);
 }
 
 

@@ -17,7 +17,10 @@ const posts = require('./api/routes/posts');
 app.use('/api/posts', checkJwt, posts);
 
 const user = require('./api/routes/user');
-app.use('/', user);
+app.use('/', checkJwt, user);
+
+const newUser = require('./api/routes/newUser');
+app.use('/', newUser);
 
 
 

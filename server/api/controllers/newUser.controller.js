@@ -2,12 +2,21 @@ const mongodb = require('mongodb');
 require('dotenv').config();
 
 exports.setNewUser = async (req, res) => {    
-    const users = await loadUsersCollection();
-    await users.insertOne({
-        userId: req.body.userId
-    });
+    try {
+        if (req.headers.authorization === process.env.NEW_USER_KEY) {
+            const users = await loadUsersCollection();
+            await users.insertOne({
+                userId: req.body.userId
+            });
 
-    res.status(201).send();
+            res.status(201).send();
+        } else {
+            res.status(401).send();
+        }
+    } catch (err) {
+        res.status(500).send();
+        throw err;
+    }
 }
 
 async function loadUsersCollection() {

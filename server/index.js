@@ -20,7 +20,7 @@ const user = require('./api/routes/user');
 app.use('/api/user', checkJwt, user);
 
 const newUser = require('./api/routes/newUser');
-app.use('/api/newuser', checkJwt, newUser);
+app.use('/api/newuser', newUser);
 
 
 

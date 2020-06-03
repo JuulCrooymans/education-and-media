@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page page--padding">
     <PostComponent />
   </div>
 </template>

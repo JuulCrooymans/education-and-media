@@ -1,7 +1,7 @@
 <template>
     <div class="row profile">
         <div class="col-12">
-            <div class="border-bottom profile__wrapper">
+            <div class="profile__wrapper">
                 <img class="profile__picture" :src="userData.picture" alt="profile picture">
                 <div class="profile__info">
                     <h4 class="profile__name">{{ userData.nickname }}</h4>
@@ -29,6 +29,8 @@
 <style lang="scss" scoped>
 .profile {
     $self: &;
+    background: $xlight;
+    padding-top: $space-lg;
 
     &__wrapper {
         display: flex;

@@ -21,12 +21,14 @@ export default {
     PostComponent
   },
   async created() {
-    try {
-      const accessToken = await this.$auth.getTokenSilently();
-      this.user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
-      await this.$store.commit('setUserData', this.user);
-    } catch(err) {
-      this.error = err.message;
+    if (this.$store.state.userRoles === null) {
+      try {
+        const accessToken = await this.$auth.getTokenSilently();
+        user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
+        await this.$store.commit('setUserData', user);
+      } catch(err) {
+        this.error = err.message;
+      }
     }
   }
 }

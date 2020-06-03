@@ -1,3 +1,32 @@
 .button {
     $self: &;
+    color: $dark;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+
+
+    &__icon {
+        height: 20px;
+        margin-left: $space-sm;
+        fill: #fff;
+    }
+
+    &--primary {
+        background: $blue;
+        color: #fff;
+    }
+
+    &--secondary {
+        border: solid 2px $light;
+    }
+
+    &--disabled {
+        pointer-events: none;
+        background: $light;
+        color: darken($light , 30%);
+    }
 }

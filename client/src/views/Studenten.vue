@@ -10,7 +10,7 @@
       <div class="col-12">
         <div v-if="error" class="error">{{ error }}</div>
         <ul v-if="!error">
-          <li v-for="el in user" :key="el">
+          <li v-for="el in $store.state.userRoles" :key="el">
             {{ el }}
           </li>
         </ul>
@@ -31,12 +31,14 @@ export default {
     }
   },
   async created() {
-    try {
-      const accessToken = await this.$auth.getTokenSilently();
-      this.user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
-      await this.$store.commit('setUserData', this.user)
-    } catch(err) {
-      this.error = err.message;
+    if (this.$store.state.userRoles === null) {
+      try {
+        const accessToken = await this.$auth.getTokenSilently();
+        const user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
+        await this.$store.commit('setUserData', user)
+      } catch(err) {
+        this.error = err.message;
+      }
     }
   }
 }

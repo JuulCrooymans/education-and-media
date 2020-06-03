@@ -5,7 +5,7 @@
                 <h4>CMD</h4>
             </div>
             <div class="nav__user col-10" v-if="!$auth.loading === true">
-                <router-link :to="`/studenten/${$auth.user.sub.replace('auth0|', '')}`" class="nav__profile">
+                <router-link :to="`/users/${$auth.user.sub.replace('auth0|', '')}`" class="nav__profile">
                     <img class="nav__image" :src="$auth.user.picture" alt="profile picture">
                     <p class="nav__username">{{ $auth.user.nickname }}</p>
                 </router-link>

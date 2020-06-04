@@ -38,6 +38,7 @@
     $self: &;
     background: $xlight;
     padding-top: $space-lg;
+    height: 210px;
 
     &__wrapper {
         display: flex;

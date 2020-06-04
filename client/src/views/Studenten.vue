@@ -6,12 +6,14 @@
       </div>
     </div>
     
+    
     <div class="row">
       <div class="col-12">
+        <LoadingIcon v-if="loading" />
         <div v-if="error" class="error">{{ error }}</div>
-        <ul v-if="!error">
-          <li v-for="el in $store.state.userRoles" :key="el">
-            {{ el }}
+        <ul class="userList" v-if="!error">
+          <li class="userList__item"  v-for="(el, index) in users" :key="el.user_id" :class="{'border-bottom': (index + 1 !== users.length)}">
+            <UserCard :user="el" />
           </li>
         </ul>
       </div>
@@ -21,13 +23,22 @@
 
 <script>
 import CurrentUserService from '@/api/CurrentUserService'
+import UsersService from '@/api/UsersService'
+import UserCard from '@/components/partials/user/UserCard'
+import LoadingIcon from '@/components/partials/ui/LoadingIcon'
 
 export default {
   name: 'about',
+  components: {
+    UserCard,
+    LoadingIcon
+  },
   data() {
     return {
       user: null,
-      error: null
+      error: null,
+      users: [],
+      loading: true
     }
   },
   methods: {
@@ -41,10 +52,33 @@ export default {
           this.error = err.message;
         }
       }
+    },
+    async getUsers() {
+      try {
+          const accessToken = await this.$auth.getTokenSilently();
+          const users = await UsersService.getUsers(accessToken);
+          this.users = users;
+        } catch(err) {
+          this.error = err.message;
+        }
     }
   },
-  created() {
-    this.getUserMetaData();
+  async created() {
+    await this.getUserMetaData();
+    await this.getUsers();
+    this.loading = false;
   }
 }
 </script>
+
+
+<style lang="scss" scoped>
+  .userList {
+    margin: 0;
+    padding: 0;
+
+    &__item {
+      list-style: none;
+    }
+  }
+</style>

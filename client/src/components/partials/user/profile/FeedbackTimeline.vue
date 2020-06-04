@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import Dropdown from '@/components/partials/Dropdown'
+    import Dropdown from '@/components/partials/ui/Dropdown'
 
     export default {
         name: 'FeedbackTimeline',

@@ -1,8 +1,9 @@
 <template>
     <div class="page">
-        <transition name="fade-fast" mode="out-in">
-            <ProfileInfo @openModal="toggleFeedbackModal" v-if="user" :userData="user" :key="$route.params.id" />
-        </transition>
+        <LoadingIcon v-if="loading" />
+
+        <ProfileInfo  @openModal="toggleFeedbackModal" v-if="user && !loading" :userData="user" :key="$route.params.id" />
+
         <transition name="fade-fast" mode="out-in">
             <Modal @closeModal="toggleFeedbackModal" v-if="showFeedbackModal" :modalTitle="'Feedback'">
                 <h5>Geef {{ user.nickname }} feedback</h5>
@@ -11,7 +12,8 @@
                 <a href="#" class="button button--disabled button--submit">Geef feedback</a>
             </Modal>
         </transition>
-        <FeedbackTimeline></FeedbackTimeline>
+
+        <FeedbackTimeline v-if="!loading"></FeedbackTimeline>
     </div>
 </template>
 
@@ -19,30 +21,36 @@
     import UserService from '@/api/UserService'
     import ProfileInfo from '@/components/partials/user/profile/ProfileInfo'
     import CurrentUserService from '@/api/CurrentUserService'
-    import Modal from '@/components/partials/user/Modal'
+    import Modal from '@/components/partials/ui/Modal'
     import FeedbackTimeline from '@/components/partials/user/profile/FeedbackTimeline'
+    import LoadingIcon from '@/components/partials/ui/LoadingIcon'
 
     export default {
         name: 'user',
         data() {
             return {
                 user: null,
-                showFeedbackModal: false
+                showFeedbackModal: false,
+                loading: true
             }
         },
         components: {
             ProfileInfo,
             Modal,
-            FeedbackTimeline
+            FeedbackTimeline,
+            LoadingIcon
         },
         watch: {
-            '$route.params.id': function (id) {
-                this.getUserData();
+            '$route.params.id': async function (id) {
+                this.loading = true;
+                await this.getUserData();
+                this.loading = false;
             }
         },
-        created() {
-            this.getUserData();
-            this.getUserMetaData();
+        async created() {
+            await this.getUserData();
+            await this.getUserMetaData();
+            this.loading = false;
         },
         methods: {
             toggleFeedbackModal(event) {

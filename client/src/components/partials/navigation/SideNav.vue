@@ -27,6 +27,8 @@
 .sidenav {
     $self: &;
     position: fixed;
+    background: white;
+    z-index: 9;
 
     &__wrapper {
         padding: $space-lg 0 0;

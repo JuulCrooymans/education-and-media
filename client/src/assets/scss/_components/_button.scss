@@ -27,6 +27,6 @@
     &--disabled {
         pointer-events: none;
         background: $light;
-        color: darken($light , 30%);
+        color: darken($light, 30%);
     }
 }

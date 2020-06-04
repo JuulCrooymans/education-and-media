@@ -11,6 +11,7 @@
                 <a href="#" class="button button--disabled button--submit">Geef feedback</a>
             </Modal>
         </transition>
+        <FeedbackTimeline></FeedbackTimeline>
     </div>
 </template>
 
@@ -19,6 +20,7 @@
     import ProfileInfo from '@/components/partials/user/profile/ProfileInfo'
     import CurrentUserService from '@/api/CurrentUserService'
     import Modal from '@/components/partials/user/Modal'
+    import FeedbackTimeline from '@/components/partials/user/profile/FeedbackTimeline'
 
     export default {
         name: 'user',
@@ -28,22 +30,19 @@
                 showFeedbackModal: false
             }
         },
-        head() {
-            return {
-                title: 'test'
-            }
-        },
         components: {
             ProfileInfo,
-            Modal
+            Modal,
+            FeedbackTimeline
         },
         watch: {
             '$route.params.id': function (id) {
                 this.getUserData();
             }
         },
-        async created() {
+        created() {
             this.getUserData();
+            this.getUserMetaData();
         },
         methods: {
             toggleFeedbackModal(event) {
@@ -56,6 +55,17 @@
                     this.user = await UserService.getUserData(this.$route.params.id, accessToken);
                 } catch(err) {
                     this.error = err.message;
+                }
+            },
+            async getUserMetaData() {
+                if (this.$store.state.userRoles === null) {
+                    try {
+                        const accessToken = await this.$auth.getTokenSilently();
+                        const user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
+                        await this.$store.commit('setUserData', user)
+                    } catch(err) {
+                        this.error = err.message;
+                    }
                 }
             }
         }

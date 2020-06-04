@@ -10,9 +10,10 @@
                             <p>Geef feedback</p>
                             <svg class="button__icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 17.5" style="overflow:visible;enable-background:new 0 0 20 17.5;" xml:space="preserve"><path id="Path_25_1_" class="st0" d="M20,8.8c0,4.8-4.5,8.8-10,8.8c-1.6,0-3.2-0.3-4.6-1l-4.5,0.6c-0.3,0-0.5-0.1-0.5-0.4 c0,0,0-0.1,0-0.1l0.6-4.1C0.3,11.3,0,10,0,8.8C0,3.9,4.5,0,10,0S20,3.9,20,8.8z"/></svg>
                         </a>
-                        <ul class="profile__tags">
+                        <!-- profile roles -->
+                        <!-- <ul class="profile__tags">
                             <li v-for="role in userData.app_metadata.roles" :key="role" class="profile__tag">{{ role }}</li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>
@@ -52,7 +53,7 @@
 
     &__info {
         #{ $self }__name {
-            margin: 16px 0 0;
+            margin: $space-sm 0;
         }
 
         #{ $self }__actions {

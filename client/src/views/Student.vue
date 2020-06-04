@@ -105,6 +105,7 @@
                 event.preventDefault();
                 if (this.modalButton === 'Sluiten') {
                     this.toggleFeedbackModal(event);
+                    this.modalButton = 'Geef feedback'
                 } else {
                     this.modalButton = 'Loading'
                     try {

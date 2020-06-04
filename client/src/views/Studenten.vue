@@ -1,17 +1,19 @@
 <template>
-  <div class="page">
+  <div class="page page--padding  ">
     <div class="row">
       <div class="col-12">
-        <h1 class="h3">About</h1>
+        <h1 class="h3">Studenten</h1>
       </div>
     </div>
     
+    
     <div class="row">
       <div class="col-12">
+        <LoadingIcon v-if="loading" />
         <div v-if="error" class="error">{{ error }}</div>
-        <ul v-if="!error">
-          <li v-for="el in user" :key="el">
-            {{ el }}
+        <ul class="userList" v-if="!error">
+          <li class="userList__item"  v-for="(el, index) in users" :key="el.user_id" :class="{'border-bottom': (index + 1 !== users.length)}">
+            <UserCard :user="el" />
           </li>
         </ul>
       </div>
@@ -21,23 +23,62 @@
 
 <script>
 import CurrentUserService from '@/api/CurrentUserService'
+import UsersService from '@/api/UsersService'
+import UserCard from '@/components/partials/user/UserCard'
+import LoadingIcon from '@/components/partials/ui/LoadingIcon'
 
 export default {
   name: 'about',
+  components: {
+    UserCard,
+    LoadingIcon
+  },
   data() {
     return {
       user: null,
-      error: null
+      error: null,
+      users: [],
+      loading: true
+    }
+  },
+  methods: {
+    async getUserMetaData() {
+      if (this.$store.state.userRoles === null) {
+        try {
+          const accessToken = await this.$auth.getTokenSilently();
+          const user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
+          await this.$store.commit('setUserData', user)
+        } catch(err) {
+          this.error = err.message;
+        }
+      }
+    },
+    async getUsers() {
+      try {
+          const accessToken = await this.$auth.getTokenSilently();
+          const users = await UsersService.getUsers(accessToken);
+          this.users = users;
+        } catch(err) {
+          this.error = err.message;
+        }
     }
   },
   async created() {
-    try {
-      const accessToken = await this.$auth.getTokenSilently();
-      this.user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
-      await this.$store.commit('setUserData', this.user)
-    } catch(err) {
-      this.error = err.message;
-    }
+    await this.getUserMetaData();
+    await this.getUsers();
+    this.loading = false;
   }
 }
 </script>
+
+
+<style lang="scss" scoped>
+  .userList {
+    margin: 0;
+    padding: 0;
+
+    &__item {
+      list-style: none;
+    }
+  }
+</style>

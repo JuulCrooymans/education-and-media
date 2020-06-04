@@ -11,7 +11,7 @@
         <br>
         <br>
         <input type="text" v-model="text" placeholder="Create a post ...">
-        <button @click="createPost">Post!</button>
+        <a href="#" @click="createPost">Post!</a>
 
         <br>
         <br>
@@ -28,7 +28,7 @@
         <img class="post__picture" :src="post.user.picture" alt="profile picture">
         <div class="post__body">
           <div class="post__user">
-            <router-link class="post__name" :to="`/studenten/${post.user.sub.replace('auth0|', '')}`">{{ post.user.name }}</router-link>
+            <router-link class="post__name" :to="`/users/${post.user.sub.replace('auth0|', '')}`">{{ post.user.name }}</router-link>
             <p class="post__date">{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</p>
 
           </div>
@@ -57,7 +57,8 @@ export default {
     }
   },
   methods: {
-    async createPost() {
+    async createPost(e) {
+      e.preventDefault();
       const accessToken = await this.$auth.getTokenSilently();
       await PostService.insertPost(this.text, this.$auth.user, accessToken);
       this.posts = await PostService.getPosts(accessToken);

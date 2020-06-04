@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page page--padding">
     <PostComponent />
   </div>
 </template>
@@ -20,14 +20,21 @@ export default {
   components: {
     PostComponent
   },
-  async created() {
-    try {
-      const accessToken = await this.$auth.getTokenSilently();
-      this.user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
-      await this.$store.commit('setUserData', this.user);
-    } catch(err) {
-      this.error = err.message;
+  methods: {
+    async getUserMetaData() {
+      if (this.$store.state.userRoles === null) {
+        try {
+          const accessToken = await this.$auth.getTokenSilently();
+          const user = await CurrentUserService.getUserData(this.$auth.user.sub, accessToken);
+          await this.$store.commit('setUserData', user)
+        } catch(err) {
+          this.error = err.message;
+        }
+      }
     }
+  },
+  created() {
+    this.getUserMetaData();
   }
 }
 </script>

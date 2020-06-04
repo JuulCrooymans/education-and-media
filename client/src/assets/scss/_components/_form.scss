@@ -1,0 +1,25 @@
+// ---- from ---- 
+
+input[type=text], textarea {
+    padding: 10px 15px;
+    box-sizing: border-box;
+    background: $light;
+    border: none;
+    border-radius: 5px;
+    margin: $space-xs 0;
+    color: $dark;
+}
+
+input[type=text]:focus, textarea:focus {
+    outline: none;
+}
+
+input[type=text]::placeholder, textarea::placeholder {
+    color: darken($light , 30%);
+}
+
+
+textarea {
+    resize: vertical;
+    min-height: 30vh;
+}

@@ -1,10 +1,19 @@
 // ---- colors ----
+$xlight: #F5F9FF;
 $light: #E0E7F2;
 $dark: #00023A;
 $blue: #0044FF;
+$red: #FF195F;
 
 // ---- space ---- 
 $space-lg: 60px;
 $space-md: 30px;
 $space-sm: 15px;
 $space-xs: 5px;
+
+// ---- radius ----
+$border-radius: 15px;
+
+// ---- shadow ----
+$shadow: 0 10px 50px rgba(0,0,0,.1);
+$shadow-small: 0 5px 30px rgba(0,0,0,.1);

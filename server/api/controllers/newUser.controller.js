@@ -6,7 +6,9 @@ exports.setNewUser = async (req, res) => {
         if (req.headers.authorization === process.env.NEW_USER_KEY) {
             const users = await loadUsersCollection();
             await users.insertOne({
-                userId: req.body.userId
+                userId: req.body.userId,
+                profile: req.body.profile,
+                feedback: req.body.feedback
             });
 
             res.status(201).send();

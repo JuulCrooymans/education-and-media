@@ -7,11 +7,18 @@
         <transition name="fade-fast" mode="out-in">
             <Modal @closeModal="toggleFeedbackModal" v-if="showFeedbackModal" :modalTitle="'Feedback'">
                 <h5>Geef {{ user.nickname }} feedback</h5>
-                <input type="text" placeholder="Titel">
-                <textarea placeholder="Some feedback..."></textarea>
-                <a href="#" class="button button--disabled button--submit">Geef feedback</a>
+                <input type="text" placeholder="Titel" v-model="comment.title">
+                <textarea placeholder="Some feedback..." v-model="comment.comment"></textarea>
+                <a href="#" @click="createUserFeedback" class="button button--primary button--submit">{{ modalButton }}</a>
             </Modal>
         </transition>
+
+        <ul >
+            <li v-for="comment in feedback" :key="comment.id">
+                <p>{{ comment.title }}</p>
+                <p>{{ comment.comment }}</p>
+            </li>
+        </ul>
 
         <FeedbackTimeline v-if="!loading"></FeedbackTimeline>
     </div>
@@ -19,8 +26,9 @@
 
 <script>
     import UserService from '@/api/UserService'
-    import ProfileInfo from '@/components/partials/user/profile/ProfileInfo'
     import CurrentUserService from '@/api/CurrentUserService'
+    import UserFeedbackService from '@/api/UserFeedbackService'
+    import ProfileInfo from '@/components/partials/user/profile/ProfileInfo'
     import Modal from '@/components/partials/ui/Modal'
     import FeedbackTimeline from '@/components/partials/user/profile/FeedbackTimeline'
     import LoadingIcon from '@/components/partials/ui/LoadingIcon'
@@ -31,7 +39,13 @@
             return {
                 user: null,
                 showFeedbackModal: false,
-                loading: true
+                loading: true,
+                feedback: null,
+                comment: {
+                    title: '',
+                    comment: ''
+                },
+                modalButton: 'Geef feedback'
             }
         },
         components: {
@@ -44,12 +58,14 @@
             '$route.params.id': async function (id) {
                 this.loading = true;
                 await this.getUserData();
+                await this.getUserFeedback();
                 this.loading = false;
             }
         },
         async created() {
             await this.getUserData();
             await this.getUserMetaData();
+            await this.getUserFeedback();
             this.loading = false;
         },
         methods: {
@@ -75,7 +91,39 @@
                         this.error = err.message;
                     }
                 }
+            },
+            async getUserFeedback() {
+                try {
+                    const accessToken = await this.$auth.getTokenSilently();
+                    const feedback = await UserFeedbackService.getUserFeedbackData(this.$route.params.id, accessToken);
+                    this.feedback = feedback;
+                } catch(err) {
+                    this.error = err.message;
+                }
+            },
+            async createUserFeedback(event) {
+                event.preventDefault();
+                if (this.modalButton === 'Sluiten') {
+                    this.toggleFeedbackModal(event);
+                } else {
+                    this.modalButton = 'Loading'
+                    try {
+                        if (this.comment.comment && this.comment.title) {
+                            const accessToken = await this.$auth.getTokenSilently();
+                            await UserFeedbackService.postUserFeedbackData(this.comment, this.$route.params.id, accessToken);
+                            this.feedback = await UserFeedbackService.getUserFeedbackData(this.$route.params.id, accessToken);
+                            this.comment.title = ''
+                            this.comment.comment = ''
+                            this.modalButton = 'Sluiten'
+                        } 
+                        
+                    } catch(err) {
+                        this.error = err.message;
+                        this.modalButton = 'Sluiten'
+                    }
+                }
             }
+            
         }
     }
 </script>

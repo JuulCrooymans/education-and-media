@@ -30,7 +30,7 @@
           <div class="post__user">
             <router-link class="post__name" :to="`/users/${post.user.sub.replace('auth0|', '')}`">{{ post.user.name }}</router-link>
             <p class="post__date">{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</p>
-
+              
           </div>
           <p class="post__body">{{ post.text }}</p>
           <a class="post__delete" href="#" v-if="post.user.sub === $auth.user.sub || $store.state.userRoles.includes('admin')" @click="deletePost($event, post._id)">delete</a>

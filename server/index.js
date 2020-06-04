@@ -23,7 +23,10 @@ const newUser = require('./api/routes/newUser');
 app.use('/api/newuser', newUser);
 
 const users = require('./api/routes/users');
-app.use('/api/users',checkJwt , users);
+app.use('/api/users', checkJwt, users);
+
+const userFeedback = require('./api/routes/userFeedback');
+app.use('/api/userfeedback', userFeedback);
 
 
 // handle production

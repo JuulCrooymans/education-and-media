@@ -23,8 +23,6 @@ class UserFeedbackService {
                 title: data.title,
                 comment: data.comment
             }
-            console.log(comment);
-            
             return fetch(`${url}${id}`, {
                 method: 'post',
                 headers: {
@@ -33,6 +31,19 @@ class UserFeedbackService {
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(comment)
+            });
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    static deleteUserFeedbackData(id, feedbackId, accessToken) {
+        try {
+            return fetch(`${url}${id}?feedback=${feedbackId}`, {
+                method: 'delete',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
             });
         } catch (err) {
             throw err;

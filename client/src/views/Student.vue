@@ -13,14 +13,28 @@
             </Modal>
         </transition>
 
-        <ul >
-            <li v-for="comment in feedback" :key="comment.id">
-                <p>{{ comment.title }}</p>
-                <p>{{ comment.comment }}</p>
-            </li>
-        </ul>
+        <transition name="fade-fast" mode="out-in">
+            <Modal @closeModal="toggleCommentModal" v-if="showCommentModal" :modalTitle="'Feedback'">
+                <div class="comment">
+                    <div class="comment__top">
+                        <h6>{{ getCurrentFeedback().title }}</h6>
+                    </div>
+                    <div class="comment__body">
+                        <p class="comment__text">{{ getCurrentFeedback().comment }}</p>
+                    </div>
+                    <div class="comment__bottom">
+                        <p class="comment__date">{{ getCurrentFeedback().date }}</p>
+                        <a href="#" @click="deleteUserFeedback" class="comment__delete">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 81 107.5" style="overflow:visible;enable-background:new 0 0 81 107.5;" xml:space="preserve"><g><path d="M31.2,88.3h-0.6c-2.5,0-4.5-2-4.5-4.5V40c0-2.5,2-4.5,4.5-4.5h0.6c2.5,0,4.5,2,4.5,4.5v43.8C35.7,86.3,33.7,88.3,31.2,88.3 z"/><path d="M50.4,88.3h-0.6c-2.5,0-4.5-2-4.5-4.5V40c0-2.5,2-4.5,4.5-4.5h0.6c2.5,0,4.5,2,4.5,4.5v43.8C54.9,86.3,52.9,88.3,50.4,88.3 z"/><path d="M74.1,40.3v57.6c0,5.3-4.3,9.6-9.6,9.6h-48c-5.3,0-9.6-4.3-9.6-9.6V40.3c0-2.7,2.1-4.8,4.8-4.8h0c2.7,0,4.8,2.1,4.8,4.8 v54.2c0,1.9,1.5,3.4,3.4,3.4h41.2c1.9,0,3.4-1.5,3.4-3.4V40.3c0-2.7,2.1-4.8,4.8-4.8h0C72,35.5,74.1,37.6,74.1,40.3z"/><path d="M76.5,22.5H63C63,7.9,51.4,0,40.5,0S18,7.9,18,22.5H4.5c-1.2,0-2.4,0.5-3.2,1.3C0.5,24.6,0,25.8,0,27c0,2.5,2,4.5,4.5,4.5 h72c1.2,0,2.4-0.5,3.2-1.3c0.8-0.8,1.3-1.9,1.3-3.2C81,24.5,79,22.5,76.5,22.5z M27,22.5C27,13.5,33.8,9,40.5,9S54,13.5,54,22.5H27 z"/></g></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                
+            </Modal>
+        </transition>
 
-        <FeedbackTimeline v-if="!loading"></FeedbackTimeline>
+        <FeedbackTimeline @openModal="toggleCommentModal" v-if="!loading" :feedback="feedback"></FeedbackTimeline>
     </div>
 </template>
 
@@ -45,7 +59,8 @@
                     title: '',
                     comment: ''
                 },
-                modalButton: 'Geef feedback'
+                modalButton: 'Geef feedback',
+                showCommentModal: false,
             }
         },
         components: {
@@ -66,12 +81,35 @@
             await this.getUserData();
             await this.getUserMetaData();
             await this.getUserFeedback();
+            if (this.$route.query.feedback) {
+                setTimeout(() => {
+                    this.toggleCommentModal();
+                },200);
+            }
             this.loading = false;
+
         },
         methods: {
+            getCurrentFeedback() {
+                return this.feedback.find(comment => comment.id === this.$route.query.feedback)
+            },
+            toggleCommentModal(event) {
+                if (event) event.preventDefault();
+                if (this.showCommentModal === true) {
+                    this.$router.push(this.$route.path);
+                }
+                this.showCommentModal = !this.showCommentModal;
+
+            },
             toggleFeedbackModal(event) {
                 event.preventDefault();
-                this.showFeedbackModal = !this.showFeedbackModal;
+
+                if (this.modalButton === 'Sluiten') {
+                    this.showFeedbackModal = !this.showFeedbackModal;
+                    this.modalButton = 'Geef feedback';
+                } else {
+                    this.showFeedbackModal = !this.showFeedbackModal;
+                }
             },
             async getUserData() {
                 try {
@@ -105,7 +143,7 @@
                 event.preventDefault();
                 if (this.modalButton === 'Sluiten') {
                     this.toggleFeedbackModal(event);
-                    this.modalButton = 'Geef feedback'
+                    
                 } else {
                     this.modalButton = 'Loading'
                     try {
@@ -115,7 +153,8 @@
                             this.feedback = await UserFeedbackService.getUserFeedbackData(this.$route.params.id, accessToken);
                             this.comment.title = ''
                             this.comment.comment = ''
-                            this.modalButton = 'Sluiten'
+                            this.showFeedbackModal = !this.showFeedbackModal;
+                            this.modalButton = 'Geef feedback'
                         } 
                         
                     } catch(err) {
@@ -123,12 +162,62 @@
                         this.modalButton = 'Sluiten'
                     }
                 }
-            }
+            },
+            async deleteUserFeedback(event) {
+                event.preventDefault();
+                
+                const accessToken = await this.$auth.getTokenSilently();
+                await UserFeedbackService.deleteUserFeedbackData(this.$route.params.id, this.$route.query.feedback, accessToken);
+                this.toggleCommentModal();
+                this.feedback = await UserFeedbackService.getUserFeedbackData(this.$route.params.id, accessToken);
+            },
             
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    .comment {
+        $self: &;
 
+        &__top {
+            display: flex;
+            margin-bottom: $space-xs;
+            align-items: center;
+
+            
+        }
+
+        &__body {
+            #{ $self }__text {
+                opacity: .87;
+                margin-bottom: $space-sm;
+            }
+        }
+
+        &__bottom {
+            display: flex;
+            align-items: center;
+
+            #{ $self }__date {
+                opacity: .6;
+            }
+
+            #{ $self }__delete {
+                margin-left: $space-sm;
+                padding: 5px 10px;
+                border-radius: 5px;
+                transition: background .15s ease;
+
+                svg {
+                    height: 25px;
+                    fill: $red;
+                }
+
+                &:hover {
+                    background: lighten($red, 40%);
+                }
+            }
+        }
+    }
 </style>

@@ -38,11 +38,10 @@
     top: 0;
     left: 0;
     z-index: 11;
-    background: rgba(255, 255, 255, .95);
+    background: rgba(0, 0, 0, .8);
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 
     input[type=text], textarea {
         width: 100%;
@@ -56,7 +55,7 @@
         background: #fff;
         padding: $space-md;
         border-radius: $border-radius;
-        box-shadow: $shadow;
+        box-shadow: 0 10px 50px rgba(0,0,0, .3);
 
         #{ $self }__nav {
             display: flex;

@@ -77,6 +77,7 @@
             border-radius: 15px;
             box-shadow: $shadow-small;
             margin-top: $space-xs;
+            z-index: 2;
 
             ul {
                 margin: 0;

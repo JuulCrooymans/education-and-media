@@ -7,4 +7,6 @@ router.get('/:id', userFeedbackController.getUserFeedback);
 
 router.post('/:id', userFeedbackController.postUserFeedback);
 
+router.delete('/:id', userFeedbackController.deleteUserFeedback);
+
 module.exports = router;

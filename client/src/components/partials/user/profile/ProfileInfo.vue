@@ -37,7 +37,7 @@
 .profile {
     $self: &;
     background: $xlight;
-    padding-top: $space-lg;
+    padding-top: $space-lg !important;
     height: 210px;
 
     &__wrapper {

@@ -11,9 +11,21 @@ function uuidv4() {
 exports.getUserFeedback = async (req, res) => {    
     try {
         const userFeedbackData = await loadUsersCollection();
-        const feedback = await userFeedbackData.findOne({userId: req.params.id})
+        const user = await userFeedbackData.findOne({userId: req.params.id})
+        
+        const data = [];
 
-        res.send(feedback.feedback);
+        for(el of user.feedback) {
+            data.push({
+                id: el.id,
+                title: el.title,
+                comment: el.comment,
+                createdAt: el.createdAt,
+                date: `${el.createdAt.getDate()}/${el.createdAt.getMonth()}/${el.createdAt.getFullYear()}`
+            });
+        }
+
+        res.send(data);
     } catch (err) {
         res.status(500).send();
         throw err;
@@ -22,7 +34,6 @@ exports.getUserFeedback = async (req, res) => {
 
 exports.postUserFeedback = async (req, res) => {    
     try {
-        
         const feedback = await loadUsersCollection();
         await feedback.updateOne({userId: req.params.id}, { $push: {
                 feedback: {
@@ -33,6 +44,18 @@ exports.postUserFeedback = async (req, res) => {
                 }
             }
         });
+
+        res.status(201).send();
+    } catch (err) {
+        res.status(500).send();
+        throw err;
+    }
+}
+
+exports.deleteUserFeedback = async (req, res) => {
+    try {
+        const feedback = await loadUsersCollection();
+        await feedback.updateOne({userId: req.params.id}, { $pull: { feedback: { id:  req.query.feedback }}});
 
         res.status(201).send();
     } catch (err) {

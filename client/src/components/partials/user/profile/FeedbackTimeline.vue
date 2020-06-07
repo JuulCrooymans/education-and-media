@@ -2,8 +2,8 @@
 <div class="margin-y">
     <div class="row">
         <h4 class="col-12">Feedback</h4>
-            <button @click="addTime">add time</button>
-
+            <input type="date" v-model="timeline.startDate">
+            <input type="date" v-model="timeline.endDate">
         <div class="filter col-12">
             <Dropdown :dropdownName="'Filter 1'"> 
                 <ul>
@@ -60,17 +60,22 @@
         data() {
             return {
                 timeline: {
-                    startDate: 1591315200000,
-                    endDate: 1591531200000
+                    startDate: "2020-06-05",
+                    endDate: "2020-06-08",
+                    
                 }
             }
         },
         methods: {
-            addTime() {
-                this.timeline.endDate = this.timeline.endDate + 100000000
-            },
             getDatePercentage(value) {
-                return (value - this.timeline.startDate) * (100 - 0) / (this.timeline.endDate - this.timeline.startDate) + 0;
+                const unixStartDate = Date.parse(this.timeline.startDate);
+                const unixEndDate = Date.parse(this.timeline.endDate);
+                console.log(unixStartDate);
+                
+                return (value - unixStartDate) * (100 - 0) / (unixEndDate - unixStartDate) + 0;
+            },
+            toUnixTimestamp(date) {
+                return Date.parse(date)
             }
         }
     }

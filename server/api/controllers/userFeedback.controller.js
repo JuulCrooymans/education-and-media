@@ -21,7 +21,7 @@ exports.getUserFeedback = async (req, res) => {
                 title: el.title,
                 comment: el.comment,
                 createdAt: el.createdAt,
-                date: `${el.createdAt.getDate()}/${el.createdAt.getMonth()}/${el.createdAt.getFullYear()}`
+                date: `${el.createdAt.getDate()}/${el.createdAt.getMonth() + 1}/${el.createdAt.getFullYear()}`
             });
         }
 

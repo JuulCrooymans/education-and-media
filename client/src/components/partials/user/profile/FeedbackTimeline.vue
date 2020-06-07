@@ -37,7 +37,10 @@
                     </router-link>
                 </div>
             </transition-group>
-
+            <div class="timeline__dates">
+                <p class="timeline__date">{{ timeline.startDate }}</p>
+                <p class="timeline__date">{{ timeline.endDate }}</p>
+            </div>
         </div>
     </div>
 </div>
@@ -61,7 +64,7 @@
             return {
                 timeline: {
                     startDate: "2020-06-05",
-                    endDate: "2020-06-08",
+                    endDate: '',
                     
                 }
             }
@@ -70,13 +73,19 @@
             getDatePercentage(value) {
                 const unixStartDate = Date.parse(this.timeline.startDate);
                 const unixEndDate = Date.parse(this.timeline.endDate);
-                console.log(unixStartDate);
                 
                 return (value - unixStartDate) * (100 - 0) / (unixEndDate - unixStartDate) + 0;
             },
             toUnixTimestamp(date) {
                 return Date.parse(date)
             }
+        },
+        created() {
+            const today = new Date;
+            const year = today.getFullYear();
+            const date = `${ today.getFullYear() }-${ ("0" + (today.getMonth() + 1)).slice(-2) }-${ ("0" + (today.getDate() + 1)).slice(-2) }` //return date tomorrow in yyyy-mm-dd format
+
+            this.timeline.endDate = date;
         }
     }
 </script>
@@ -88,12 +97,13 @@
         height: 200px;
         border-bottom: solid $dark 2px;
         position: relative;
-        overflow: hidden;
 
         &__comments {
             position: relative;
             height: 100%;
             width: 100%;
+            overflow-x: hidden;
+
 
             #{ $self }__comment {
                 position: absolute;
@@ -102,12 +112,23 @@
                 transition: all .3s ease;
             }
         }
+
+        &__dates {
+            display: flex;
+            justify-content: space-between;
+            padding-top: $space-sm;
+
+            #{ $self }__date {
+                opacity: .6;
+            }
+        }
     }
 
     .comment {
         $self: &;
         display: inline-block;
         transition: transform .15s ease;
+        transform: translate(-100%, 0px);
 
         &__icon {
             width: 50px;
@@ -115,7 +136,7 @@
         }
 
         &:hover {
-            transform: translateY(-10px);
+            transform: translate(-100%, -10px);
         }
     }
 

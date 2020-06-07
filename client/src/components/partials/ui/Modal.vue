@@ -84,6 +84,10 @@
             .button--submit {
                 margin: $space-md 0 0;
                 align-self: center;
+
+                svg.loading__icon {
+                    height: 40px;
+                }
             }
         }
     }

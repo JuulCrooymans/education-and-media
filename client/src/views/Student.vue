@@ -29,10 +29,14 @@
                         </a>
                     </div>
                 </div>
-                
-                
             </Modal>
         </transition>
+
+        <div class="row" v-if="!loading">
+            <Competencies  />
+            <Boks />
+        </div>
+
 
         <FeedbackTimeline @openModal="toggleCommentModal" v-if="!loading" :feedback="feedback"></FeedbackTimeline>
     </div>
@@ -46,6 +50,8 @@
     import Modal from '@/components/partials/ui/Modal'
     import FeedbackTimeline from '@/components/partials/user/profile/FeedbackTimeline'
     import LoadingIcon from '@/components/partials/ui/LoadingIcon'
+    import Competencies from '@/components/partials/user/profile/Competencies'
+    import Boks from '@/components/partials/user/profile/Boks'
 
     export default {
         name: 'user',
@@ -67,7 +73,9 @@
             ProfileInfo,
             Modal,
             FeedbackTimeline,
-            LoadingIcon
+            LoadingIcon,
+            Competencies,
+            Boks
         },
         watch: {
             '$route.params.id': async function (id) {
@@ -184,8 +192,6 @@
             display: flex;
             margin-bottom: $space-xs;
             align-items: center;
-
-            
         }
 
         &__body {

@@ -31,7 +31,7 @@ export default new Router({
     },
     {
       path: '/trajecten',
-      component: () => import('./views/Trajecten.vue'),
+      component: () => import('./views/Courses.vue'),
       beforeEnter: authGuard
     },
     {

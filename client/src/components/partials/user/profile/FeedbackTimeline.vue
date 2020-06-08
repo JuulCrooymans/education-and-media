@@ -2,9 +2,9 @@
 <div class="margin-y">
     <div class="row">
         <h4 class="col-12">Feedback</h4>
-            <input type="date" v-model="timeline.startDate">
-            <input type="date" v-model="timeline.endDate">
         <div class="filter col-12">
+            <input type="date" class="filter__date" v-model="timeline.startDate">
+            <input type="date" class="filter__date" v-model="timeline.endDate">
             <Dropdown :dropdownName="'Filter 1'"> 
                 <ul>
                     <li>
@@ -143,6 +143,31 @@
     .filter {
         display: flex;
         justify-content: flex-start;
+
+        &__date {
+            border: 2px solid $light;
+            padding: 8px 15px 8px 20px;
+            border-radius: 50px;
+            margin: $space-sm $space-sm $space-sm 0;
+            font-weight: bold;
+            font-family: $font-title;
+            color: $dark;
+
+            &::-webkit-clear-button {
+                display: none;
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &::-webkit-calendar-picker-indicator { 
+                cursor: pointer;
+                color: $blue;
+                background: url('~@/assets/img/icons/arrowdown.svg') no-repeat center;
+                margin: 0;
+            }
+        }
     }
 
     .feedback-list-enter-active, .feedback-list-leave-active {

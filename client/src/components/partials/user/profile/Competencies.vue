@@ -28,108 +28,108 @@
 </template>
 
 <script>
-    export default {
-        name: 'Competencies',
-        data() {
-            return {
-                competencies: {
-                    generic: [
-                        {
-                            id: 0,
-                            name: 'Oriënteren & begrijpen',
-                            percentage: 25
-                        },
-                        {
-                            id: 1,
-                            name: 'Conceptualiseren',
-                            percentage: 25
-                        },
-                        {
-                            id: 2,
-                            name: 'Verbeelden & prototypes maken',
-                            percentage: 25
-                        },
-                        {
-                            id: 3,
-                            name: 'Evalueren',
-                            percentage: 25
-                        }
-                    ],
-                    profession: [
-                        {
-                            id: 0,
-                            name: 'Inter- en multidisciplinaire samenwerken',
-                            percentage: 25
-                        },
-                        {
-                            id: 1,
-                            name: 'Initiëren, organiseren en regisseren',
-                            percentage: 25
-                        },
-                        {
-                            id: 2,
-                            name: 'Manifesteren en presenteren',
-                            percentage: 25
-                        },
-                        {
-                            id: 3,
-                            name: 'Ontwikkelen en reflecteren',
-                            percentage: 25
-                        },
-                        {
-                            id: 4,
-                            name: 'Onderzoeken',
-                            percentage: 10
-                        }
-                    ]
-                }
+export default {
+    name: "Competencies",
+    data() {
+        return {
+            competencies: {
+                generic: [
+                    {
+                        id: 0,
+                        name: "Oriënteren & begrijpen",
+                        percentage: 25
+                    },
+                    {
+                        id: 1,
+                        name: "Conceptualiseren",
+                        percentage: 25
+                    },
+                    {
+                        id: 2,
+                        name: "Verbeelden & prototypes maken",
+                        percentage: 25
+                    },
+                    {
+                        id: 3,
+                        name: "Evalueren",
+                        percentage: 25
+                    }
+                ],
+                profession: [
+                    {
+                        id: 0,
+                        name: "Inter- en multidisciplinaire samenwerken",
+                        percentage: 25
+                    },
+                    {
+                        id: 1,
+                        name: "Initiëren, organiseren en regisseren",
+                        percentage: 25
+                    },
+                    {
+                        id: 2,
+                        name: "Manifesteren en presenteren",
+                        percentage: 25
+                    },
+                    {
+                        id: 3,
+                        name: "Ontwikkelen en reflecteren",
+                        percentage: 25
+                    },
+                    {
+                        id: 4,
+                        name: "Onderzoeken",
+                        percentage: 10
+                    }
+                ]
             }
-        }
+        };
     }
+};
 </script>
 
 <style lang="scss" scoped>
-    .competencies {
-        $self: &;
-        display: flex;
-        margin-top: $space-md;
+.competencies {
+    $self: &;
+    display: flex;
+    margin-top: $space-md;
 
-        &__generic {
-            width: 50%;
-        }
+    &__generic {
+        width: 50%;
+    }
 
-        &__profession {
-            width: 50%;
-        }
+    &__profession {
+        width: 50%;
+    }
 
-        &__list {
-            ul {
-                padding: 0;
-                margin: 0;
+    &__list {
+        ul {
+            padding: 0;
+            margin: 0;
 
-                li {
-                    list-style: none;
-                    margin-bottom: $space-sm;
+            li {
+                list-style: none;
+                margin-bottom: $space-sm;
 
-                    p {
-                        opacity: .87;
-                        margin-bottom: $space-xs;
-                    }
+                p {
+                    opacity: 0.87;
+                    margin-bottom: $space-xs;
+                }
 
-                    .progress {
-                        width: calc(100% - 30px);
-                        height: 15px;
-                        background: $light;
+                .progress {
+                    width: calc(100% - 30px);
+                    height: 15px;
+                    background: $light;
+                    border-radius: 15px;
+
+                    &__indicator {
+                        background: $blue;
+                        height: 100%;
                         border-radius: 15px;
-
-                        &__indicator {
-                            background: $blue;
-                            height: 100%;
-                            border-radius: 15px;
-                        }
                     }
                 }
             }
         }
     }
+}
 </style>

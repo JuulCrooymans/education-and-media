@@ -18,74 +18,83 @@
 </template>
 
 <script>
-    import * as d3 from "d3";
+import * as d3 from "d3";
 
-    export default {
-        name: 'Boks',
-        data() {
-            return {
-                skills: [
-                    {
-                        id: 0,
-                        name: 'Technologies',
-                        percentage: 45,
-                        color: '#2EEF75'
-                    },
-                    {
-                        id: 1,
-                        name: 'Design',
-                        percentage: 30,
-                        color: '#FFE354'
-                    },
-                    {
-                        id: 2,
-                        name: 'Humanities',
-                        percentage: 25,
-                        color: '#69B4FF'
-                    },
-                    {
-                        id: 3,
-                        name: 'Audio & Video',
-                        percentage: 10,
-                        color: '#EF64FF'
-                    }
-                ]
-            }
-        },
-        mounted() {
-            this.generateChart();
-        },
-        methods: {
-            generateChart() {
-                const width = 400;
-                const height = 400;
-                const radius = Math.min(width, height) / 2;
+export default {
+    name: "Boks",
+    data() {
+        return {
+            skills: [
+                {
+                    id: 0,
+                    name: "Technologies",
+                    percentage: 45,
+                    color: "#2EEF75"
+                },
+                {
+                    id: 1,
+                    name: "Design",
+                    percentage: 30,
+                    color: "#FFE354"
+                },
+                {
+                    id: 2,
+                    name: "Humanities",
+                    percentage: 25,
+                    color: "#69B4FF"
+                },
+                {
+                    id: 3,
+                    name: "Audio & Video",
+                    percentage: 10,
+                    color: "#EF64FF"
+                }
+            ]
+        };
+    },
+    mounted() {
+        this.generateChart();
+    },
+    methods: {
+        generateChart() {
+            const width = 400;
+            const height = 400;
+            const radius = Math.min(width, height) / 2;
 
-                const svg = d3.select("#boks-chart")
-                    .append("svg")
-                        .attr("width", width)
-                        .attr("height", height)
-                    .append("g")
-                        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            const svg = d3
+                .select("#boks-chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr(
+                    "transform",
+                    "translate(" + width / 2 + "," + height / 2 + ")"
+                );
 
-                const pie = d3.pie()
-                    .value(function(d) {return d.value.percentage})
+            const pie = d3.pie().value(function(d) {
+                return d.value.percentage;
+            });
 
-                const data = pie(d3.entries(this.skills));
+            const data = pie(d3.entries(this.skills));
 
-                svg
-                    .selectAll('path')
-                    .data(data)
-                    .enter()
-                    .append('path')
-                    .attr('d', d3.arc()
+            svg.selectAll("path")
+                .data(data)
+                .enter()
+                .append("path")
+                .attr(
+                    "d",
+                    d3
+                        .arc()
                         .innerRadius(140)
                         .outerRadius(radius)
-                    )
-                    .attr('fill', function(d){return d.data.value.color })
-            }
+                )
+                .attr("fill", function(d) {
+                    return d.data.value.color;
+                });
         }
     }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -113,7 +122,7 @@
                 }
 
                 p {
-                    opacity: .87;
+                    opacity: 0.87;
                 }
             }
         }

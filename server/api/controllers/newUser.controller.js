@@ -1,7 +1,7 @@
 const mongodb = require('mongodb');
 require('dotenv').config();
 
-exports.setNewUser = async (req, res) => {    
+exports.setNewUser = async (req, res) => {
     try {
         if (req.headers.authorization === process.env.NEW_USER_KEY) {
             const users = await loadUsersCollection();

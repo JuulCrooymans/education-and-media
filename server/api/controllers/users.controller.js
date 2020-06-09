@@ -21,7 +21,9 @@ exports.getUsers = async (req, res) => {
             const data = await axios({
                 method: 'GET',
                 url: `https://dev-a9jcsg3o.eu.auth0.com/api/v2/users`,
-                headers: { authorization: `bearer ${response.access_token}` }
+                headers: {
+                    authorization: `bearer ${response.access_token}`
+                }
             });
 
             for (user of data.data) {
@@ -36,7 +38,7 @@ exports.getUsers = async (req, res) => {
 
             res.send(users);
         });
-        
+
     } catch (err) {
         res.send(err.message)
         throw err

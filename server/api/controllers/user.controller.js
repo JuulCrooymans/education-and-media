@@ -18,16 +18,20 @@ exports.getUser = async (req, res) => {
     try {
         auth0.clientCredentialsGrant(tokenOptions, async (err, response) => {
             if (err) throw err
-            
+
             const auth0Data = await axios({
                 method: 'GET',
                 url: `https://dev-a9jcsg3o.eu.auth0.com/api/v2/users/auth0|${req.params.id}`,
-                headers: { authorization: `bearer ${response.access_token}` }
+                headers: {
+                    authorization: `bearer ${response.access_token}`
+                }
             });
 
             const profile = await loadUsersCollection();
-            const profileData = await profile.findOne({ userId: req.params.id })
-            
+            const profileData = await profile.findOne({
+                userId: req.params.id
+            })
+
             const data = {
                 user: await auth0Data.data,
                 profile: await profileData.profile,

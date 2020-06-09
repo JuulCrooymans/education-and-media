@@ -34,10 +34,7 @@ router.put('/:id', async (req, res) => {
 
 // Delete Posts
 router.delete('/:id', async (req, res) => {
-    const token = req.headers.authorization.split(' ')[1]
 
-    const sub = jwtDecode(token).sub
-    
     const posts = await loadPostsCollection();    
     await posts.deleteOne({_id: new mongodb.ObjectID(req.params.id)});
     res.status(200).send();

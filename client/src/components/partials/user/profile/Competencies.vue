@@ -37,22 +37,22 @@ export default {
                     {
                         id: 0,
                         name: "Oriënteren & begrijpen",
-                        percentage: 25
+                        percentage: 40
                     },
                     {
                         id: 1,
                         name: "Conceptualiseren",
-                        percentage: 25
+                        percentage: 30
                     },
                     {
                         id: 2,
                         name: "Verbeelden & prototypes maken",
-                        percentage: 25
+                        percentage: 80
                     },
                     {
                         id: 3,
                         name: "Evalueren",
-                        percentage: 25
+                        percentage: 35
                     }
                 ],
                 profession: [
@@ -64,22 +64,22 @@ export default {
                     {
                         id: 1,
                         name: "Initiëren, organiseren en regisseren",
-                        percentage: 25
+                        percentage: 30
                     },
                     {
                         id: 2,
                         name: "Manifesteren en presenteren",
-                        percentage: 25
+                        percentage: 40
                     },
                     {
                         id: 3,
                         name: "Ontwikkelen en reflecteren",
-                        percentage: 25
+                        percentage: 90
                     },
                     {
                         id: 4,
                         name: "Onderzoeken",
-                        percentage: 10
+                        percentage: 15
                     }
                 ]
             }

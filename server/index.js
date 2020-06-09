@@ -28,6 +28,11 @@ app.use('/api/users', checkJwt, users);
 const userFeedback = require('./api/routes/userFeedback');
 app.use('/api/userfeedback', userFeedback);
 
+const projects = require('./api/routes/projects');
+app.use('/api/courses', projects);
+
+const minors = require('./api/routes/minors');
+app.use('/api/courses', minors);
 
 // handle production
 if (process.env.NODE_ENV === 'production') {

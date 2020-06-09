@@ -32,13 +32,15 @@
             </Modal>
         </transition>
 
+        <FeedbackTimeline @openModal="toggleCommentModal" v-if="!loading" :feedback="feedback"></FeedbackTimeline>
+
         <div class="row" v-if="!loading">
             <Competencies  />
             <Boks />
         </div>
 
 
-        <FeedbackTimeline @openModal="toggleCommentModal" v-if="!loading" :feedback="feedback"></FeedbackTimeline>
+        
     </div>
 </template>
 

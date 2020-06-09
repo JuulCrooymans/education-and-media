@@ -9,19 +9,41 @@
     align-items: center;
 
 
-    &__icon {
-        height: 20px;
-        margin-left: $space-sm;
-        fill: #fff;
-    }
+    
+
+    
+
+    
 
     &--primary {
         background: $blue;
         color: #fff;
+
+        #{ $self }__icon {
+            width: 20px;
+            margin-left: $space-sm;
+            fill: #fff;
+        }
+
+        #{ $self }__only-icon {
+            width: 20px;
+            fill: #fff;
+        }
     }
 
     &--secondary {
         border: solid 2px $light;
+
+        #{ $self }__icon {
+            width: 20px;
+            margin-left: $space-sm;
+            fill: $blue;
+        }
+
+        #{ $self }__only-icon {
+            width: 20px;
+            fill: $blue;
+        }
     }
 
     &--disabled {

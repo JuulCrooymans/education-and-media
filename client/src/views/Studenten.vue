@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import CurrentUserService from "@/api/CurrentUserService";
-import UsersService from "@/api/UsersService";
+import CurrentUserService from "@/api/user/CurrentUserService";
+import UsersService from "@/api/user/UsersService";
 import UserCard from "@/components/partials/user/UserCard";
 import LoadingIcon from "@/components/partials/ui/LoadingIcon";
 

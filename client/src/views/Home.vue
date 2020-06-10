@@ -7,7 +7,7 @@
 <script>
 // @ is an alias to /src
 import PostComponent from "@/components/PostComponent.vue";
-import CurrentUserService from "@/api/CurrentUserService";
+import CurrentUserService from "@/api/user/CurrentUserService";
 
 export default {
     name: "home",

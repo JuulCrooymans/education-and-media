@@ -83,9 +83,9 @@
 </template>
 
 <script>
-import UserService from "@/api/UserService";
-import CurrentUserService from "@/api/CurrentUserService";
-import UserFeedbackService from "@/api/UserFeedbackService";
+import UserService from "@/api/user/UserService";
+import CurrentUserService from "@/api/user/CurrentUserService";
+import UserFeedbackService from "@/api/user/UserFeedbackService";
 import ProfileInfo from "@/components/partials/user/profile/ProfileInfo";
 import Modal from "@/components/partials/ui/Modal";
 import FeedbackTimeline from "@/components/partials/user/profile/FeedbackTimeline";

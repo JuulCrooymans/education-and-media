@@ -14,7 +14,7 @@ const users = require('./user/users');
 router.use('/api/user', checkJwt, user);
 router.use('/api/newuser', newUser);
 router.use('/api/users', checkJwt, users);
-router.use('/api/userfeedback', userFeedback);
+router.use('/api/userfeedback', checkJwt, userFeedback);
 router.use('/api/currentUser', checkJwt, currentUser);
 
 // ---- course routes ----
@@ -22,8 +22,8 @@ const projects = require('./courses/projects');
 const minors = require('./courses/minors');
 const courses = require('./courses/courses');
 
-router.use('/api/courses', courses);
-router.use('/api/courses', projects);
-router.use('/api/courses', minors);
+router.use('/api/courses', checkJwt, courses);
+router.use('/api/courses', checkJwt, projects);
+router.use('/api/courses', checkJwt, minors);
 
 module.exports = router;

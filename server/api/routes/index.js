@@ -4,7 +4,6 @@ const router = express.Router();
 // ---- auth0 check JWT ----
 const checkJwt = require('../middleware/auth');
 
-
 // ---- user routes ----
 const currentUser = require('./user/currentUser');
 const user = require('./user/user');
@@ -21,7 +20,9 @@ router.use('/api/currentUser', checkJwt, currentUser);
 // ---- course routes ----
 const projects = require('./courses/projects');
 const minors = require('./courses/minors');
+const courses = require('./courses/courses');
 
+router.use('/api/courses', courses);
 router.use('/api/courses', projects);
 router.use('/api/courses', minors);
 

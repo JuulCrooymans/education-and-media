@@ -1,31 +1,48 @@
 const mongodb = require('mongodb');
 require('dotenv').config();
 
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0,
-            v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-
-exports.getMinors = async (req, res) => {
+exports.getMinor = async (req, res) => { // get unique minor
     try {
-       console.log(req.params.course);
-       console.log(req.params.minor);
-       res.send('Succes!')
-        
+        const minor = await loadMinorsCollection();
+        const data = await minor.find({
+            $and: [{
+                courses: {
+                    $in: [req.params.course]
+                }
+            }, {
+                slug: {
+                    $eq: req.params.minor
+                }
+            }]
+        }).toArray();
+
+        res.send(data);
+
     } catch (err) {
         res.status(500).send(err);
     }
 }
 
-async function loadUsersCollection() {
+exports.getMinors = async (req, res) => { // get all minors
+    try {
+        const minors = await loadMinorsCollection();
+        const data = await minors.find({
+            courses: {
+                $in: [req.params.course]
+            }
+        }).toArray();
+
+        res.send(data);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+}
+
+async function loadMinorsCollection() {
     const client = await mongodb.MongoClient.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@education-and-media-vzyqk.gcp.mongodb.net/test?retryWrites=true&w=majority`, {
         useUnifiedTopology: true,
         useNewUrlParser: true
     });
 
-    return client.db('education-and-media').collection('projects');
-
+    return client.db('education-and-media').collection('minors');
 }

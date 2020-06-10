@@ -1,26 +1,46 @@
 const mongodb = require('mongodb');
 require('dotenv').config();
 
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0,
-            v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-
-exports.getProjects = async (req, res) => {
+exports.getProject = async (req, res) => { // get unique project
     try {
-       console.log(req.params.course);
-       console.log(req.params.minor);
-       res.send('Succes!')
+        const projects = await loadProjectsCollection();
+        const data = await projects.find({
+            _id: new mongodb.ObjectID(req.params.project)
+        }).toArray();
+
+        res.send(data)
         
     } catch (err) {
         res.status(500).send(err);
     }
 }
 
-async function loadUsersCollection() {
+exports.getProjects = async (req, res) => { // get all projects in minor
+    try {
+        const projects = await loadProjectsCollection();
+        const data = await projects.find({
+            $and: [{
+                courses: {
+                    $in: [req.params.course]
+                },
+                minors: {
+                    $in: [req.params.minor]
+                }
+            }]
+        }).toArray();
+
+        if (data.length > 0) {
+            res.send(data);
+        } else {
+            res.status(404).send();
+        }
+
+    } catch (err) {
+        res.status(500).send(err);
+    }
+}
+
+async function loadProjectsCollection() {
     const client = await mongodb.MongoClient.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@education-and-media-vzyqk.gcp.mongodb.net/test?retryWrites=true&w=majority`, {
         useUnifiedTopology: true,
         useNewUrlParser: true

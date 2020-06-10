@@ -1,5 +1,5 @@
 const express = require('express');
-const userFeedbackController = require('../controllers/userFeedback.controller');
+const userFeedbackController = require('../../controllers/user/userFeedback.controller');
 const router = express.Router();
 
 // Get user

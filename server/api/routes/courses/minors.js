@@ -1,5 +1,5 @@
 const express = require('express');
-const minorsController = require('../controllers/minors.controller');
+const minorsController = require('../../controllers/courses/minors.controller');
 const router = express.Router();
 
 // Get user

@@ -30,15 +30,26 @@
             <div class="row">
                 <h4 class="col-12">Minors</h4>
             </div>
-            <div class="row margin-yb">
+            <div class="row margin-yb" v-if="minors.length > 0">
                 <Minor v-for="minor in minors" :key="minor._id" :minorInfo="minor" />
+            </div>
+
+            <div class="row margin-yb" v-else>
+                <p class="col-12">Nog geen minors</p>
             </div>
 
             <div class="row">
                 <h4 class="col-12">Studenten</h4>
             </div>
-            <div class="row">
-                <UserCardSmall v-for="student in students" :key="student.user_id" :studentInfo="student" />
+            <div class="row" v-if="students.length > 0">
+                <UserCardSmall
+                    v-for="student in students"
+                    :key="student.user_id"
+                    :studentInfo="student"
+                />
+            </div>
+            <div class="row" v-else>
+                <p class="col-12">Geen studenten</p>
             </div>
             <p v-if="error">{{ error }}</p>
         </div>
@@ -50,7 +61,7 @@ import MinorService from "@/api/course/MinorService";
 import UsersService from "@/api/user/UsersService";
 import Minor from "@/components/partials/courses/Minor";
 import LoadingIcon from "@/components/partials/ui/LoadingIcon";
-import UserCardSmall from '@/components/partials/user/UserCardSmall'
+import UserCardSmall from "@/components/partials/user/UserCardSmall";
 
 export default {
     name: "Minors",
@@ -80,26 +91,29 @@ export default {
 
                 data.forEach(minor => {
                     minor.students.forEach(student => {
-                        if (!studentList.includes(student) && student !== '') {
+                        if (!studentList.includes(student) && student !== "") {
                             studentList.push(student);
                         }
                     });
                 });
 
                 this.studentIds = studentList;
-                
                 await this.getUsers(studentList);
-
                 this.minors = data;
             } catch (err) {
                 this.error = err.message;
             }
         },
         async getUsers(students) {
-            
+            if (students.length === 0) {
+                students = false;
+            }
             try {
                 const accessToken = await this.$auth.getTokenSilently();
-                const users = await UsersService.getUsers(students, accessToken);
+                const users = await UsersService.getUsers(
+                    students,
+                    accessToken
+                );
                 this.students = users;
             } catch (err) {
                 this.error = err.message;

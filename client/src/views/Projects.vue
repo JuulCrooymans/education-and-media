@@ -30,10 +30,13 @@
         <LoadingIcon v-if="loading" />
 
         <div class="course-content" v-if="!loading">
-            <ul v-if="projects.length > 0">
-                <li v-for="project in projects" :key="project._id">{{ project.name }}</li>
-            </ul>
-            <p v-else>Nog geen projecten</p>
+            <div class="row" v-if="projects.length > 0">
+                <Project v-for="project in projects" :key="project._id" :projectInfo="project" />
+            </div>
+
+            <div class="row" v-else>
+                <p class="col-12">Nog geen projecten</p>
+            </div>
         </div>
     </div>
 </template>
@@ -41,6 +44,7 @@
 <script>
 import ProjectService from "@/api/course/ProjectService";
 import LoadingIcon from "@/components/partials/ui/LoadingIcon";
+import Project from "@/components/partials/courses/Project";
 
 export default {
     name: "Projects",
@@ -52,7 +56,8 @@ export default {
         };
     },
     components: {
-        LoadingIcon
+        LoadingIcon,
+        Project
     },
     methods: {
         async getAllProjectsInMinor() {

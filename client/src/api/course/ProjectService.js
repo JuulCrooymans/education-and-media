@@ -1,16 +1,15 @@
 const url = '/api/courses'
 
 class ProjectService {
-    static async getUniqueProject(course, minor, projectid, accessToken) {
+    static async getUniqueProject(course, minor, projectId, accessToken) {
         try {
-            const res = await fetch(`${url}/${course}/minor/${minor}/project/${projectid}`, {
+            const res = await fetch(`${url}/${course}/minors/${minor}/projects/${projectId}`, {
                 method: 'get',
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`
                 }
             });
             const data = await res.json();
-
             return data
 
         } catch (err) {

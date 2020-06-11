@@ -5,15 +5,8 @@
     border-radius: 30px;
     font-weight: bold;
     text-decoration: none;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-
-
-    
-
-    
-
-    
 
     &--primary {
         background: $blue;
@@ -29,6 +22,12 @@
             width: 20px;
             fill: #fff;
         }
+
+        #{ $self }__icon--left {
+            width: 20px;
+            margin-right: $space-sm;
+            fill: #fff;
+        }
     }
 
     &--secondary {
@@ -42,6 +41,12 @@
 
         #{ $self }__only-icon {
             width: 20px;
+            fill: $blue;
+        }
+
+        #{ $self }__icon--left {
+            width: 20px;
+            margin-right: $space-sm;
             fill: $blue;
         }
     }

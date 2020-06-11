@@ -15,4 +15,21 @@
     margin: $space-lg 0;
 }
 
+.course-top {
+    display: flex;
+    align-items: center;
+
+    h1.h3 {
+        margin-left: $space-md
+    }
+
+}
+
+.course-content {
+    margin-top: $space-md;
+}
+
+.margin-yb {
+    margin-bottom: $space-lg;
+}
 

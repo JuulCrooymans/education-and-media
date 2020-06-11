@@ -1,6 +1,6 @@
 const url = '/api/courses'
 
-class CurrentUserService {
+class MinorService {
     static async getUniqueMinor(course, minor, accessToken) {
         try {
             const res = await fetch(`${url}/${course}/minor/${minor}`, {
@@ -36,4 +36,4 @@ class CurrentUserService {
     }
 }
 
-export default CurrentUserService
+export default MinorService

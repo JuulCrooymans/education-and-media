@@ -1,6 +1,6 @@
 const url = '/api/courses'
 
-class CurrentUserService {
+class ProjectService {
     static async getUniqueProject(course, minor, projectid, accessToken) {
         try {
             const res = await fetch(`${url}/${course}/minor/${minor}/project/${projectid}`, {
@@ -36,4 +36,4 @@ class CurrentUserService {
     }
 }
 
-export default CurrentUserService
+export default ProjectService

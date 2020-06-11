@@ -63,7 +63,7 @@ export default {
         async getUsers() {
             try {
                 const accessToken = await this.$auth.getTokenSilently();
-                const users = await UsersService.getUsers(accessToken);
+                const users = await UsersService.getUsers([] ,accessToken);
                 this.users = users;
             } catch (err) {
                 this.error = err.message;

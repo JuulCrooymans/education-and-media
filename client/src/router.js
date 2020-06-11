@@ -36,8 +36,13 @@ export default new Router({
 			beforeEnter: authGuard
 		},
 		{
-			path: '/trajecten/minors',
+			path: '/trajecten/:course/minors',
 			component: () => import('./views/Minors.vue'),
+			beforeEnter: authGuard
+		},
+		{
+			path: '/trajecten/:course/minors/:minor/projects',
+			component: () => import('./views/Projects.vue'),
 			beforeEnter: authGuard
 		},
 		{

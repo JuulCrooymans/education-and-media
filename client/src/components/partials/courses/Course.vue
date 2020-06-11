@@ -1,26 +1,16 @@
 <template>
-    <div>
-        <div class="row course-year">
-            <h4 class="col-12">{{ course.name }}</h4>
+    <router-link :to="`/trajecten/${courseInfo.course}/minors`" class="course">
+        <div class="course__info">
+            <h6>{{ courseInfo.course.replace('-', '.') }}</h6>
         </div>
-        <div class="row courses">
-            <div class="col-3" v-for="period in course.periods" :key="period.id">
-                <div class="course">
-                    <div class="course__info">
-                        <h6>{{ period.course }}</h6>
-                        <h5>{{ period.name }}</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
 export default {
     name: "Course",
     props: {
-        course: {
+        courseInfo: {
             type: Object,
             require: true
         }
@@ -35,17 +25,12 @@ export default {
     background: $light;
     padding: $space-sm;
     border-radius: 15px;
+    display: block;
+    text-decoration: none;
+    color: $dark;
 
     &__info {
         opacity: 0.87;
     }
-}
-
-.course-year {
-    margin-bottom: $space-sm;
-}
-
-.courses {
-    margin-bottom: $space-md;
 }
 </style>

@@ -9,7 +9,7 @@ exports.getProject = async (req, res) => { // get unique project
         }).toArray();
 
         res.send(data)
-        
+
     } catch (err) {
         res.status(500).send(err);
     }
@@ -29,11 +29,7 @@ exports.getProjects = async (req, res) => { // get all projects in minor
             }]
         }).toArray();
 
-        if (data.length > 0) {
-            res.send(data);
-        } else {
-            res.status(404).send();
-        }
+        res.send(data);
 
     } catch (err) {
         res.status(500).send(err);

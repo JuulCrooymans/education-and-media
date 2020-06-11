@@ -10,17 +10,36 @@ const auth0 = new AuthenticationClient({
 
 const tokenOptions = {
     audience: 'https://dev-a9jcsg3o.eu.auth0.com/api/v2/',
-    scope: 'read:users'
+    scope: 'read:users read:user_idp_tokens'
 }
 
 exports.getUsers = async (req, res) => {
     try {
+        let queryString = '';
+        
+        if (req.headers.user_list && req.headers.user_list.length > 0) {
+            const queryArray = [];
+            const userList = req.headers.user_list.split(',');
+            
+            for (let i = 0; i < userList.length; i++) {
+                if (i < userList.length - 1) {
+                    `user_id:auth0|`
+                    queryArray.push(`user_id:auth0|${userList[i]}" OR "`);
+                } else {
+                    queryArray.push(`user_id:auth0|${userList[i]}`);
+                }
+            }
+            queryString = `?q=${queryArray.join('')}`;
+            
+            
+        }
+
         auth0.clientCredentialsGrant(tokenOptions, async (err, response) => {
             if (err) throw err
             const users = [];
             const data = await axios({
                 method: 'GET',
-                url: `https://dev-a9jcsg3o.eu.auth0.com/api/v2/users`,
+                url: `https://dev-a9jcsg3o.eu.auth0.com/api/v2/users${queryString}`,
                 headers: {
                     authorization: `bearer ${response.access_token}`
                 }
@@ -35,7 +54,6 @@ exports.getUsers = async (req, res) => {
                     roles: user.app_metadata.roles
                 });
             }
-
             res.send(users);
         });
 

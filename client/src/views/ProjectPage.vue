@@ -30,6 +30,9 @@
                 </div>
             </div>
             <div class="course-content">
+                <div class="row">
+                    <h4 class="col-12">{{ project.title }}</h4>
+                </div>
                 <div class="row margin-yb">
                     <div class="col-6">
                         <p>{{ project.info }}</p>

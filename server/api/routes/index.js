@@ -9,6 +9,7 @@ const currentUser = require('./user/currentUser');
 const user = require('./user/user');
 const newUser = require('./user/newUser');
 const userFeedback = require('./user/userFeedback');
+const userProjects = require('./user/userProjects');
 const users = require('./user/users');
 
 router.use('/api/user', checkJwt, user);
@@ -16,6 +17,7 @@ router.use('/api/newuser', newUser);
 router.use('/api/users', checkJwt, users);
 router.use('/api/userfeedback', checkJwt, userFeedback);
 router.use('/api/currentUser', checkJwt, currentUser);
+router.use('/api/userprojects', userProjects);
 
 // ---- course routes ----
 const projects = require('./courses/projects');

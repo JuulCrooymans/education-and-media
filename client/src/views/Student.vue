@@ -79,6 +79,10 @@
             <Competencies />
             <Boks />
         </div>
+
+        <div class="row" v-if="!loading">
+            <UserProjects :userProjects="userProjects" />
+        </div>
     </div>
 </template>
 
@@ -86,12 +90,15 @@
 import UserService from "@/api/user/UserService";
 import CurrentUserService from "@/api/user/CurrentUserService";
 import UserFeedbackService from "@/api/user/UserFeedbackService";
+import UserProjectsService from "@/api/user/UserProjectsService";
+
 import ProfileInfo from "@/components/partials/user/profile/ProfileInfo";
 import Modal from "@/components/partials/ui/Modal";
 import FeedbackTimeline from "@/components/partials/user/profile/FeedbackTimeline";
 import LoadingIcon from "@/components/partials/ui/LoadingIcon";
 import Competencies from "@/components/partials/user/profile/Competencies";
 import Boks from "@/components/partials/user/profile/Boks";
+import UserProjects from "@/components/partials/user/profile/UserProjects";
 
 export default {
     name: "user",
@@ -106,7 +113,8 @@ export default {
                 comment: ""
             },
             modalButton: "Geef feedback",
-            showCommentModal: false
+            showCommentModal: false,
+            userProjects: []
         };
     },
     components: {
@@ -115,7 +123,8 @@ export default {
         FeedbackTimeline,
         LoadingIcon,
         Competencies,
-        Boks
+        Boks,
+        UserProjects
     },
     watch: {
         "$route.params.id": async function(id) {
@@ -129,6 +138,7 @@ export default {
         await this.getUserData();
         await this.getUserMetaData();
         await this.getUserFeedback();
+        await this.getUserProjects();
         if (this.$route.query.feedback) {
             setTimeout(() => {
                 this.toggleCommentModal();
@@ -158,6 +168,13 @@ export default {
             } else {
                 this.showFeedbackModal = !this.showFeedbackModal;
             }
+        },
+        async getUserProjects() {
+            const accessToken = await this.$auth.getTokenSilently();
+            this.userProjects = await UserProjectsService.getUserProjectsIds(
+                this.$route.params.id,
+                accessToken
+            );
         },
         async getUserData() {
             try {

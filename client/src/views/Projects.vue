@@ -35,7 +35,7 @@
             </div>
 
             <div class="row" v-else>
-                <p class="col-12">Nog geen projecten</p>
+                <p class="col-12">Geen projecten</p>
             </div>
         </div>
     </div>
@@ -65,11 +65,14 @@ export default {
                 const accessToken = await this.$auth.getTokenSilently();
                 const course = this.$route.params.course;
                 const minor = this.$route.params.minor;
-                this.projects = await ProjectService.getAllProjectsInMinor(
+                const projects = await ProjectService.getAllProjectsInMinor(
                     course,
                     minor,
                     accessToken
                 );
+
+                this.projects = projects.filter(el => el.isActive === true);
+                
             } catch (err) {
                 this.error = err.message;
             }

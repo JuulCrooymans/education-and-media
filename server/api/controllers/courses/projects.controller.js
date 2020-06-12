@@ -20,12 +20,8 @@ exports.getProjects = async (req, res) => { // get all projects in minor
         const projects = await loadProjectsCollection();
         const data = await projects.find({
             $and: [{
-                courses: {
-                    $in: [req.params.course]
-                },
-                minors: {
-                    $in: [req.params.minor]
-                }
+                courses: req.params.course,
+                minors: req.params.minor
             }]
         }).toArray();
 
@@ -43,5 +39,4 @@ async function loadProjectsCollection() {
     });
 
     return client.db('education-and-media').collection('projects');
-
 }

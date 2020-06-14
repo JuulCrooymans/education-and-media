@@ -3,8 +3,8 @@ require('dotenv').config();
 
 exports.getUserProjects = async (req, res) => {
     try {
-        const userFeedbackData = await loadUsersCollection();
-        const user = await userFeedbackData.findOne({
+        const userUserProjects = await loadUsersCollection();
+        const user = await userUserProjects.findOne({
             userId: req.params.id
         })
 
@@ -38,10 +38,8 @@ exports.getProjects = async (req, res) => {
             }
             
         } else {
-            res.status(404).send();
+            res.end();
         }
-
-
         
     } catch (err) {
         res.send(err);

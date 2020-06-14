@@ -17,7 +17,7 @@ router.use('/api/newuser', newUser);
 router.use('/api/users', checkJwt, users);
 router.use('/api/userfeedback', checkJwt, userFeedback);
 router.use('/api/currentUser', checkJwt, currentUser);
-router.use('/api/userprojects', userProjects);
+router.use('/api/userprojects', checkJwt, userProjects);
 
 // ---- course routes ----
 const projects = require('./courses/projects');

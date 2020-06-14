@@ -1,14 +1,18 @@
 <template>
-    <div class="col-12">
-        <h4>Projecten</h4>
-        <router-link v-for="project in projects" :key="project._id" :to="`/trajecten/${project.courses}/minors/${project.minors}/projects/${project._id}`">
-            <p>{{ project.name }}</p>
-        </router-link>
+    <div class="row">
+        <div class="col-3" v-for="project in projects" :key="project._id">
+            <router-link
+                class="project"
+                :to="`/trajecten/${project.courses}/minors/${project.minors}/projects/${project._id}`"
+            >
+                <p>{{ project.name }}</p>
+            </router-link>
+        </div>
     </div>
 </template>
 
 <script>
-import UserProjectsService from '@/api/user/UserProjectsService';
+import UserProjectsService from "@/api/user/UserProjectsService";
 
 export default {
     name: "userProjects",
@@ -26,7 +30,10 @@ export default {
     methods: {
         async getProjects() {
             const accessToken = await this.$auth.getTokenSilently();
-            const projects = await UserProjectsService.getProjects(this.userProjects, accessToken);
+            const projects = await UserProjectsService.getProjects(
+                this.userProjects,
+                accessToken
+            );
 
             this.projects = projects;
         }
@@ -38,4 +45,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.project {
+    $self: &;
+
+    background: $light;
+    display: flex;
+    padding: $space-sm;
+    border-radius: 15px;
+    text-decoration: none;
+    color: $dark;
+}
 </style>

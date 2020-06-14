@@ -81,8 +81,18 @@
         </div>
 
         <div class="row" v-if="!loading">
-            <UserProjects :userProjects="userProjects" />
+            <div class="col-12">
+                <h4>Projecten</h4>
+            </div>
         </div>
+        <UserProjects v-if="!loading && userProjects[0] !== ''"  :userProjects="userProjects" />
+
+        <div class="row" v-if="!loading && userProjects[0] === ''">
+            <div class="col-12">
+                <p>Deze student heeft geen projecten.</p>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -131,6 +141,7 @@ export default {
             this.loading = true;
             await this.getUserData();
             await this.getUserFeedback();
+            await this.getUserProjects();
             this.loading = false;
         }
     },
@@ -170,6 +181,7 @@ export default {
             }
         },
         async getUserProjects() {
+            
             const accessToken = await this.$auth.getTokenSilently();
             this.userProjects = await UserProjectsService.getUserProjectsIds(
                 this.$route.params.id,

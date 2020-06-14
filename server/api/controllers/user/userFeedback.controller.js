@@ -2,20 +2,23 @@ const mongodb = require('mongodb');
 require('dotenv').config();
 
 function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
     });
 }
 
-exports.getUserFeedback = async (req, res) => {    
+exports.getUserFeedback = async (req, res) => {
     try {
         const userFeedbackData = await loadUsersCollection();
-        const user = await userFeedbackData.findOne({userId: req.params.id})
-        
+        const user = await userFeedbackData.findOne({
+            userId: req.params.id
+        })
+
         const data = [];
 
-        for(el of user.feedback) {
+        for (el of user.feedback) {
             data.push({
                 id: el.id,
                 title: el.title,
@@ -32,10 +35,13 @@ exports.getUserFeedback = async (req, res) => {
     }
 }
 
-exports.postUserFeedback = async (req, res) => {    
+exports.postUserFeedback = async (req, res) => {
     try {
         const feedback = await loadUsersCollection();
-        await feedback.updateOne({userId: req.params.id}, { $push: {
+        await feedback.updateOne({
+            userId: req.params.id
+        }, {
+            $push: {
                 feedback: {
                     id: uuidv4(),
                     title: req.body.title,
@@ -55,7 +61,15 @@ exports.postUserFeedback = async (req, res) => {
 exports.deleteUserFeedback = async (req, res) => {
     try {
         const feedback = await loadUsersCollection();
-        await feedback.updateOne({userId: req.params.id}, { $pull: { feedback: { id:  req.query.feedback }}});
+        await feedback.updateOne({
+            userId: req.params.id
+        }, {
+            $pull: {
+                feedback: {
+                    id: req.query.feedback
+                }
+            }
+        });
 
         res.status(201).send();
     } catch (err) {

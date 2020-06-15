@@ -103,6 +103,47 @@
                             </li>
                         </ul>
                     </Dropdown>
+
+                    <Dropdown :dropdownName="'BoKS'">
+                        <ul>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Technologies"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Technologies
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Design"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Design
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Humanities"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Humanities
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Audio en Video"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Audio en Video
+                                </label>
+                            </li>
+                        </ul>
+                    </Dropdown>
                 </div>
                 <textarea placeholder="Feedback" v-model="comment.comment"></textarea>
                 <a

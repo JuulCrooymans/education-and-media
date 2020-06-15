@@ -15,9 +15,137 @@
                 v-if="showFeedbackModal"
                 :modalTitle="'Feedback'"
             >
-                <h5>Geef {{ user.nickname }} feedback</h5>
-                <input type="text" placeholder="Titel" v-model="comment.title" />
-                <textarea placeholder="Some feedback..." v-model="comment.comment"></textarea>
+                <h5 class="modal-title">Geef {{ user.nickname }} feedback</h5>
+                <div class="add-tags">
+                    <Dropdown :dropdownName="'Beroepscompententie'">
+                        <ul>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Oriënteren en begrijpen"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Oriënteren en begrijpen
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Conceptualiseren"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Conceptualiseren
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Verbeelden en prototypes maken"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Verbeelden en prototypes maken
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input value="Evalueren" v-model="comment.tags" type="checkbox" />Evalueren
+                                </label>
+                            </li>
+                        </ul>
+                    </Dropdown>
+
+                    <Dropdown :dropdownName="'Generieke compententie'">
+                        <ul>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Inter- en multidisciplinaire samenwerken"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Inter- en multidisciplinaire samenwerken
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Initiëren, organiseren en regisseren"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Initiëren, organiseren en regisseren
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Manifesteren en presenteren"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Manifesteren en presenteren
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Ontwikkelen en reflecteren"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Ontwikkelen en reflecteren
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Onderzoeken"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Onderzoeken
+                                </label>
+                            </li>
+                        </ul>
+                    </Dropdown>
+
+                    <Dropdown :dropdownName="'BoKS'">
+                        <ul>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Technologies"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Technologies
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Design"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Design
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Humanities"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Humanities
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input
+                                        value="Audio en Video"
+                                        v-model="comment.tags"
+                                        type="checkbox"
+                                    />Audio en Video
+                                </label>
+                            </li>
+                        </ul>
+                    </Dropdown>
+                </div>
+                <textarea placeholder="Feedback" v-model="comment.comment"></textarea>
                 <a
                     href="#"
                     @click="createUserFeedback"
@@ -25,6 +153,26 @@
                 >{{ modalButton }}</a>
             </Modal>
         </transition>
+
+        <FeedbackTimeline @openModal="toggleCommentModal" v-if="!loading" :feedback="feedback"></FeedbackTimeline>
+
+        <div class="row" v-if="!loading">
+            <Competencies />
+            <Boks />
+        </div>
+
+        <div class="row" v-if="!loading">
+            <div class="col-12">
+                <h4>Projecten</h4>
+            </div>
+        </div>
+        <UserProjects v-if="!loading && userProjects[0] !== ''" :userProjects="userProjects" />
+
+        <div class="row" v-if="!loading && userProjects[0] === ''">
+            <div class="col-12">
+                <p>Deze student heeft geen projecten.</p>
+            </div>
+        </div>
 
         <transition name="fade-fast" mode="out-in">
             <Modal
@@ -34,12 +182,17 @@
             >
                 <div class="comment">
                     <div class="comment__top">
-                        <h6>{{ getCurrentFeedback().title }}</h6>
-                    </div>
-                    <div class="comment__body">
-                        <p class="comment__text">{{ getCurrentFeedback().comment }}</p>
-                    </div>
-                    <div class="comment__bottom">
+                        
+
+                        <div class="comment__user">
+                            <img
+                                :src="getCurrentFeedback().user.picture"
+                                alt="profile picture"
+                                class="comment__picture"
+                            />
+                            <h6 class="comment__username">{{ getCurrentFeedback().user.name }}</h6>
+                        </div>
+
                         <p class="comment__date">{{ getCurrentFeedback().date }}</p>
                         <a href="#" @click="deleteUserFeedback" class="comment__delete">
                             <svg
@@ -68,31 +221,30 @@
                                 </g>
                             </svg>
                         </a>
+
+
+                    </div>
+                    <div class="comment__body">
+                        <p class="comment__text">{{ getCurrentFeedback().comment }}</p>
+                    </div>
+                    <div class="comment__bottom">
+
+                        <div class="comment__tags">
+                            <ul class="comment__tags-list">
+                                <li
+                                    class="comment__tag"
+                                    v-for="(tag, index) in getCurrentFeedback().tags"
+                                    :key="index"
+                                >
+                                    <p>{{ tag }}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        
                     </div>
                 </div>
             </Modal>
         </transition>
-
-        <FeedbackTimeline @openModal="toggleCommentModal" v-if="!loading" :feedback="feedback"></FeedbackTimeline>
-
-        <div class="row" v-if="!loading">
-            <Competencies />
-            <Boks />
-        </div>
-
-        <div class="row" v-if="!loading">
-            <div class="col-12">
-                <h4>Projecten</h4>
-            </div>
-        </div>
-        <UserProjects v-if="!loading && userProjects[0] !== ''"  :userProjects="userProjects" />
-
-        <div class="row" v-if="!loading && userProjects[0] === ''">
-            <div class="col-12">
-                <p>Deze student heeft geen projecten.</p>
-            </div>
-        </div>
-
     </div>
 </template>
 
@@ -109,6 +261,7 @@ import LoadingIcon from "@/components/partials/ui/LoadingIcon";
 import Competencies from "@/components/partials/user/profile/Competencies";
 import Boks from "@/components/partials/user/profile/Boks";
 import UserProjects from "@/components/partials/user/profile/UserProjects";
+import Dropdown from "@/components/partials/ui/Dropdown";
 
 export default {
     name: "user",
@@ -119,8 +272,12 @@ export default {
             loading: true,
             feedback: null,
             comment: {
-                title: "",
-                comment: ""
+                comment: "",
+                tags: [],
+                currentUser: {
+                    name: this.$auth.user.nickname,
+                    picture: this.$auth.user.picture
+                }
             },
             modalButton: "Geef feedback",
             showCommentModal: false,
@@ -128,6 +285,7 @@ export default {
         };
     },
     components: {
+        Dropdown,
         ProfileInfo,
         Modal,
         FeedbackTimeline,
@@ -181,7 +339,6 @@ export default {
             }
         },
         async getUserProjects() {
-            
             const accessToken = await this.$auth.getTokenSilently();
             this.userProjects = await UserProjectsService.getUserProjectsIds(
                 this.$route.params.id,
@@ -227,12 +384,13 @@ export default {
         },
         async createUserFeedback(event) {
             event.preventDefault();
+
             if (this.modalButton === "Sluiten") {
                 this.toggleFeedbackModal(event);
             } else {
                 this.modalButton = "Loading";
                 try {
-                    if (this.comment.comment && this.comment.title) {
+                    if (this.comment.comment) {
                         const accessToken = await this.$auth.getTokenSilently();
                         await UserFeedbackService.postUserFeedbackData(
                             this.comment,
@@ -243,8 +401,8 @@ export default {
                             this.$route.params.id,
                             accessToken
                         );
-                        this.comment.title = "";
                         this.comment.comment = "";
+                        this.comment.tags = [];
                         this.showFeedbackModal = !this.showFeedbackModal;
                         this.modalButton = "Geef feedback";
                     }
@@ -274,25 +432,69 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.add-tags-title {
+    font-weight: bold;
+    font-family: $font-title;
+    margin: $space-sm 0 0;
+}
+
+.modal-title {
+    margin-bottom: $space-sm;
+}
+
 .comment {
     $self: &;
 
-    &__top {
-        display: flex;
-        margin-bottom: $space-xs;
-        align-items: center;
-    }
+    &__bottom {
+        #{ $self }__tags {
+            #{ $self }__tags-list {
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap;
 
-    &__body {
-        #{ $self }__text {
-            opacity: 0.87;
-            margin-bottom: $space-sm;
+                #{ $self }__tag {
+                    background: $light;
+                    list-style: none;
+                    padding: 5px 10px;
+                    margin: 0 $space-xs $space-xs 0;
+                    border-radius: 20px;
+
+                    p {
+                        font-weight: 800;
+                        letter-spacing: .8px;
+                        font-size: .8rem;
+                        color: darken($light, 65%);
+
+                    }
+                }
+            }
         }
     }
 
-    &__bottom {
+    &__body {
+        margin-bottom: $space-md;
+        #{ $self }__text {
+            opacity: 0.87;
+            line-height: 1.3rem;
+        }
+    }
+
+    &__top {
         display: flex;
         align-items: center;
+        margin-bottom: $space-md;
+
+        #{ $self }__user {
+            display: flex;
+            align-items: center;
+            margin-right: $space-md;
+
+            #{ $self }__picture {
+                height: 50px;
+                border-radius: 50%;
+                margin-right: $space-sm;
+            }
+        }
 
         #{ $self }__date {
             opacity: 0.6;

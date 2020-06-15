@@ -103,7 +103,7 @@ export default {
         ul {
             margin: 0;
             padding: 0;
-            width: 200px;
+            width: 300px;
 
             li {
                 list-style: none;
@@ -114,9 +114,12 @@ export default {
                     width: 100%;
                     display: block;
                     cursor: pointer;
+                    text-indent: -23px;
+                    padding-left: 23px;
 
                     input {
-                        margin-right: $space-xs;
+                        margin-right: $space-xs * 2;
+                        margin-bottom: auto;
                     }
                 }
             }

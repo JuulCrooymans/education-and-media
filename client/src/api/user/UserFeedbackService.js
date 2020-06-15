@@ -20,8 +20,9 @@ class UserFeedbackService {
     static postUserFeedbackData(data, id, accessToken) {
         try {
             const comment = {
-                title: data.title,
-                comment: data.comment
+                comment: data.comment,
+                tags: data.tags,
+                user: data.currentUser
             }
             return fetch(`${url}${id}`, {
                 method: 'post',

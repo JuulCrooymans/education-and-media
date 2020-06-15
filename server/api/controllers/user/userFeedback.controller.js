@@ -21,13 +21,13 @@ exports.getUserFeedback = async (req, res) => {
         for (el of user.feedback) {
             data.push({
                 id: el.id,
-                title: el.title,
                 comment: el.comment,
                 createdAt: el.createdAt,
+                tags: el.tags,
+                user: el.user,
                 date: `${el.createdAt.getDate()}/${el.createdAt.getMonth() + 1}/${el.createdAt.getFullYear()}`
             });
         }
-
         res.send(data);
     } catch (err) {
         res.status(500).send();
@@ -44,8 +44,9 @@ exports.postUserFeedback = async (req, res) => {
             $push: {
                 feedback: {
                     id: uuidv4(),
-                    title: req.body.title,
                     comment: req.body.comment,
+                    tags: req.body.tags,
+                    user: req.body.user,
                     createdAt: new Date()
                 }
             }

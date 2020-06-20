@@ -2,7 +2,7 @@
     <div class="page page--padding">
         <div class="row">
             <div class="col-12">
-                <h1 class="h3">Studenten</h1>
+                <h1 class="h3">Gebruikers</h1>
             </div>
         </div>
 

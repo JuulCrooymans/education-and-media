@@ -39,7 +39,7 @@
                         />
                     </svg>
                 </div>
-                <p>Studenten</p>
+                <p>Gebruikers</p>
             </router-link>
             <router-link class="sidenav__button sidenav-link" to="/trajecten">
                 <div class="sidenav__icon">
